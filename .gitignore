@@ -91,3 +91,6 @@ ENV/
 # other stuff
 logs/*
 *.pid
+export.csv
+import.py
+export.py
