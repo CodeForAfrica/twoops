@@ -50,6 +50,7 @@ class Listener(tweepy.StreamListener):
                       created_at=status.created_at,
                       sender_id=status.user.id,
                       username=status.user.screen_name,
+                      avatar=status.user.profile_image_url.replace('_normal', ''),
                       message=str(status.text.encode('utf-8'))
                       )
             # persist tweet metadata

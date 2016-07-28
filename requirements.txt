@@ -1,2 +1,4 @@
 tweepy==3.5.0
 redis==2.10.5
+Flask
+Flask-Script

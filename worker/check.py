@@ -33,7 +33,7 @@ def main():
             print "Unexpected response for %s -- %s" % (entry, other_error)
 
     
-    now = time.asctime()
+    now = time.asctime() + '|' + str(delete_count)
     print "Last update: %s | Last run delete count: %s" % (now, delete_count)
     redis_client.set(TIME_KEY, now)
 

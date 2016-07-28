@@ -1,7 +1,9 @@
 import os
 import logging
 
-FILTER = ["1237372231", "89910973"]
+FILTER = ["1237372231", "89910973", "35390608", "81811976", "147654165",
+        "3332342333", "183165874", "726748106", "295663598", "2515899612",
+        "3378377920", "2936714848", "126955629", "333935142"]
 
 LOGGING = {}
 LOGGING['location'] = 'logs/log-pylitwoops-streaming.log'
@@ -36,3 +38,5 @@ PREFIX = dict(
         )
 
 TIME_KEY = "updated-at"
+
+DEFAULT_IMAGE = "http://abs.twimg.com/sticky/default_profile_images/default_profile_4.png"
