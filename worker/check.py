@@ -9,7 +9,7 @@ def main():
     twitter_client = get_api()
     redis_client = get_redis()
     entries = redis_client.keys("%s*" % PREFIX['new'])
-    print "Going through %s entries" % len(entries)
+    print "[%s] - Going through %s entries" % (datetime.datetime.now(), len(entries))
     delete_count = 0
     for entry in entries:
         saved_status = eval(redis_client.get(entry))
