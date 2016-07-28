@@ -1,10 +1,11 @@
 """
 Stream listener
 """
+import redis
 import tweepy
 import logging
 from pylitwoops.streaming.config import (
-        TW_AUTH_CREDENTIALS, SENDER_ID, FILTER)
+        TW_AUTH_CREDENTIALS, SENDER_ID, FILTER, REDIS)
 
 PRINCIPLE_TW_HANDLE = 'pylitwoops'
 
@@ -28,6 +29,11 @@ def get_api(auth_only=False):
         raise err
 
 
+def get_redis():
+    """
+    return <redis.StrictRedis> instance
+    """
+    return redis.StrictRedis(**REDIS)
 
 class Listener(tweepy.StreamListener):
     """
@@ -46,13 +52,16 @@ class Listener(tweepy.StreamListener):
                       username=status.user.screen_name,
                       message=str(status.text.encode('utf-8'))
                       )
+            # persist tweet metadata
+            redis_client = get_redis()
+            payload['saved'] = redis_client.set(payload['request_id'], payload)
 
-            logging.info('Tweet - {request_id} | {username} | {message}'.format(
+            logging.info('{request_id} | {username} | {message} - {saved}'.format(
                     **payload))
 
+
         except Exception, err:
-            print 'ERROR on_status - {}'.format(str(err))
-            raise err
+            logging.error('on_status -- {}'.format(str(err)))
 
 
     def on_error(self, status_code):
