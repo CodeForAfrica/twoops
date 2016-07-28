@@ -29,3 +29,10 @@ REDIS = dict(
         socket_timeout=2,
         socket_connect_timeout=2,
         )
+
+PREFIX = dict(
+        new='tw-',
+        deleted='del-'
+        )
+
+TIME_KEY = "updated-at"

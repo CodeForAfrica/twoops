@@ -5,7 +5,7 @@ import redis
 import tweepy
 import logging
 from pylitwoops.streaming.config import (
-        TW_AUTH_CREDENTIALS, SENDER_ID, FILTER, REDIS)
+        TW_AUTH_CREDENTIALS, SENDER_ID, FILTER, REDIS, PREFIX, TIME_KEY)
 
 PRINCIPLE_TW_HANDLE = 'pylitwoops'
 
@@ -54,7 +54,8 @@ class Listener(tweepy.StreamListener):
                       )
             # persist tweet metadata
             redis_client = get_redis()
-            payload['saved'] = redis_client.set(payload['request_id'], payload)
+            store_key = PREFIX['new'] + str(payload['request_id'])
+            payload['saved'] = redis_client.set(store_key, payload)
 
             logging.info('{request_id} | {username} | {message} - {saved}'.format(
                     **payload))
