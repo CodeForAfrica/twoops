@@ -53,13 +53,15 @@ class Listener(tweepy.StreamListener):
                       avatar=status.user.profile_image_url.replace('_normal', ''),
                       message=str(status.text.encode('utf-8'))
                       )
-            # persist tweet metadata
-            redis_client = get_redis()
-            store_key = PREFIX['new'] + str(payload['request_id'])
-            payload['saved'] = redis_client.set(store_key, payload)
 
-            logging.info('{request_id} | {username} | {message} - {saved}'.format(
-                    **payload))
+            if status.user.id_str in FILTER:
+                # persist tweet metadata
+                redis_client = get_redis()
+                store_key = PREFIX['new'] + str(payload['request_id'])
+                payload['saved'] = redis_client.set(store_key, payload)
+
+                logging.info('{request_id} | {username} | {message} - {saved}'.format(
+                        **payload))
 
 
         except Exception, err:
