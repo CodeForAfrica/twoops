@@ -58,7 +58,7 @@ class Listener(tweepy.StreamListener):
                 # persist tweet metadata
                 redis_client = get_redis()
                 store_key = PREFIX['new'] + str(payload['request_id'])
-                payload['saved'] = redis_client.set(store_key, payload)
+                payload['saved'] = redis_client.set(store_key.strip(), payload)
 
                 logging.info('{request_id} | {username} | {message} - {saved}'.format(
                         **payload))
