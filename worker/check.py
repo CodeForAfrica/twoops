@@ -28,33 +28,52 @@ def chunkify(list_, size):
         return resp
 
         
-
 def main():
     twitter_client = get_api()
     redis_client = get_redis()
     entries = redis_client.keys("%s*" % PREFIX['new'])
-    print "[%s] - Going through %s entries" % (datetime.datetime.now(), len(entries))
-    delete_count = 0
-    for entry in entries:
-        saved_status = eval(redis_client.get(entry))
-        status_id = entry.replace(PREFIX['new'], '')
 
-        try: # check if it's still on twitter
-            status = twitter_client.get_status(status_id)
-            print "%s check" % entry
-        except tweepy.error.TweepError, err:
-            deleted = redis_client.delete(entry)
-            print "ER: %s -- %s -- %s" % (entry, err, deleted)
-             
-            if err.message[0]['code'] == 144:
-                store_key = PREFIX['deleted'] + str(status_id)
-                saved_status['saved'] = redis_client.set(store_key, saved_status)
-                print "DELETED!!!  --  {request_id}  --  {username}: {message} -- {saved}".format(**saved_status)
-                delete_count += 1
-            else:
-                print "Unexpected response for %s -- %s" % (entry, err)
-        except Exception, other_error:
-            print "Unexpected response for %s -- %s" % (entry, other_error)
+    chunk_size = 160  # because twitter api rate limit is 180
+    chunks = chunkify(entries, chunk_size)
+    print "[%s] - Going through %s entries... Broken down in %s chunks" % (
+            datetime.datetime.now(), len(entries), len(chunks))
+
+    for chunk in chunks:
+        # run chunk; then check rate limit
+        delete_count = 0
+        for entry in chunk:
+            saved_status = eval(redis_client.get(entry))
+            status_id = entry.replace(PREFIX['new'], '')
+
+            try: # check if it's still on twitter
+                status = twitter_client.get_status(status_id)
+                print "%s check" % entry
+            except tweepy.error.TweepError, err:
+                deleted = redis_client.delete(entry)
+                print "ER: %s -- %s -- %s" % (entry, err, deleted)
+                 
+                if err.message[0]['code'] == 144:
+                    store_key = PREFIX['deleted'] + str(status_id)
+                    saved_status['saved'] = redis_client.set(store_key, saved_status)
+                    print "DELETED!!!  --  {request_id}  --  {username}: {message} -- {saved}".format(**saved_status)
+                    delete_count += 1
+                else:
+                    print "Unexpected response for %s -- %s" % (entry, err)
+            except Exception, other_error:
+                print "Unexpected response for %s -- %s" % (entry, other_error)
+
+
+        rate_limits = check_rate_limits()
+        # can we run another chunk at current rate limits?
+        if rate_limits['remaining'] >= chunk_size:
+            print "Remaining allowance in this window: {remaining} | No time to sleep".format(**rate_limits)
+            continue
+        else:
+            print "Allowance in this window: {remaining} | Sleeping for {seconds_to_reset} secs".format(**rate_limits)
+            sleep_time = rate_limits['seconds_to_reset'] + 1
+            time.sleep(sleep_time)
+            continue
+
 
     
     now = time.asctime() + '|' + str(delete_count)
