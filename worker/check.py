@@ -3,7 +3,8 @@ check if tweet has been deleted
 """
 import datetime, time
 from pylitwoops.streaming.listener import (
-        get_redis, get_api, tweepy, PREFIX, TIME_KEY)
+        get_redis, get_api, tweepy, PREFIX, TIME_KEY,
+        check_rate_limits)
 
 def main():
     twitter_client = get_api()

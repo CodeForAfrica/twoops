@@ -93,6 +93,13 @@ class Listener(tweepy.StreamListener):
             logging.error('on_status -- {}'.format(str(err)))
 
 
+    def on_dropped_connection(self,):
+        """
+        do this when Twitter closes connection
+        """
+        print "You probably need to restart me"
+
+    
     def on_error(self, status_code):
         """
         handles errors
