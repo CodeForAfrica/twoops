@@ -1,10 +1,33 @@
 """
 check if tweet has been deleted
 """
-import datetime, time
+import datetime, time, math
 from pylitwoops.streaming.listener import (
         get_redis, get_api, tweepy, PREFIX, TIME_KEY,
         check_rate_limits)
+
+
+def chunkify(list_, size):
+    '''
+    break down list to chunks of size `size` each.
+
+    returns a list of lists of size `size`
+
+    @list:   a <list> element
+    @size:   the maximum chunk size.  an <int>
+    '''
+    if len(list_) <= size:
+        return [list_]
+    else:
+        chunks = len(list_) / float(size)
+        resp = []
+        limit = 0
+        for item in range(1, int(math.ceil(chunks)) + 1):
+            resp.append(list_[limit:limit+size])
+            limit += size
+        return resp
+
+        
 
 def main():
     twitter_client = get_api()
