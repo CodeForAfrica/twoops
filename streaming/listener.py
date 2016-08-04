@@ -1,6 +1,7 @@
 """
 Stream listener
 """
+import time
 import redis
 import tweepy
 import logging
@@ -22,7 +23,7 @@ def get_api(auth_only=False):
         auth.set_access_token(creds['access_token_key'], creds['access_token_secret'])
         if auth_only:
             return auth
-        api = tweepy.API(auth)
+        api = tweepy.API(auth_handler=auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
         return api
     except Exception, err:
         api_err = 'Cannot create API object: {}'.format(str(err))
@@ -34,6 +35,30 @@ def get_redis():
     return <redis.StrictRedis> instance
     """
     return redis.StrictRedis(**REDIS)
+
+
+def epoch_to_date(time_in_epoch):
+    """
+    convert time in epoch to formatted datetime
+    """
+    return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time_in_epoch))
+
+
+def check_rate_limits(endpoint="/statuses/show/:id"):
+    '''
+    '''
+    try:
+        tw = get_api()
+        resp = tw.rate_limit_status()
+        limits = resp['resources']['statuses'][endpoint]
+        seconds_to_reset = limits['reset'] - time.time()
+        print "{remaining} out of {limit} | Resetting in %d seconds".format(**limits) % int(seconds_to_reset)
+        limits['seconds_to_reset'] = seconds_to_reset
+        return limits
+
+    except Exception, err:
+        print "ERROR: Cannot get rate limits - %s" % str(err)
+
 
 class Listener(tweepy.StreamListener):
     """
