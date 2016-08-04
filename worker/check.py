@@ -74,11 +74,10 @@ def main():
             time.sleep(sleep_time)
             continue
 
-
-    
-    now = time.asctime() + '|' + str(delete_count)
-    print "Last update: %s | Last run delete count: %s" % (now, delete_count)
-    redis_client.set(TIME_KEY, now)
+        
+        now = time.asctime() + '|' + str(delete_count)
+        print "Last update: %s | Last run delete count: %s" % (now, delete_count)
+        redis_client.set(TIME_KEY, now)
 
 
 if __name__ == '__main__':
