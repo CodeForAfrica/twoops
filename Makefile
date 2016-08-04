@@ -9,3 +9,6 @@ runscript:
 
 startstreaming:
 	python streaming/start.py
+
+heartbeat:
+	python worker/heartbeat.py
