@@ -95,12 +95,12 @@
                 <div class="thumbnail">
                     <img src="" alt="">
                     <div class="caption">
-                        <a target="_blank" href="https://twitter.com/{{entry['username']}}"><h3>@{{ entry['username'] }}</h3></a>
+                        <a target="_blank" href="https://twitter.com/{{entry['username']}}"><h3>@{{ entry['username'] }} deleted this tweet:</h3></a>
                         <p> {{ entry['message'].decode('utf-8') }} </p>
                         <br>
                         <p>Posted on: {{ entry['created_at'] }} </p>
                         <p>
-                        <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} hmm… we see what you did there" class="btn btn-default">Taunt</a>
+                        <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} hmm… we see what you did there" class="btn btn-default">Tweet to {{ entry['username'] }}</a>
                         </p>
                     </div>
                 </div>
