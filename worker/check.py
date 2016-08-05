@@ -63,16 +63,17 @@ def main():
                 print "Unexpected response for %s -- %s" % (entry, other_error)
 
 
-        rate_limits = check_rate_limits()
-        # can we run another chunk at current rate limits?
-        if rate_limits['remaining'] >= chunk_size:
-            print "[%s]: Remaining allowance in this window: {remaining} | No time to sleep".format(**rate_limits) % datetime.datetime.now()
-            continue
-        else:
-            print "[%s]: Allowance in this window: {remaining} | Sleeping for {seconds_to_reset} secs".format(**rate_limits) % datetime.datetime.now()
-            sleep_time = rate_limits['seconds_to_reset'] + 1
-            time.sleep(sleep_time)
-            continue
+        if len(chunks) > 1:
+            # can we run another chunk at current rate limits?
+            rate_limits = check_rate_limits()
+            if rate_limits['remaining'] >= chunk_size:
+                print "[%s]: Remaining allowance in this window: {remaining} | No time to sleep".format(**rate_limits) % datetime.datetime.now()
+                continue
+            else:
+                print "[%s]: Allowance in this window: {remaining} | Sleeping for {seconds_to_reset} secs".format(**rate_limits) % datetime.datetime.now()
+                sleep_time = rate_limits['seconds_to_reset'] + 1
+                time.sleep(sleep_time)
+                continue
 
         
         now = time.asctime() + '|' + str(delete_count)
