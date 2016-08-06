@@ -48,15 +48,28 @@ def tracked_users():
     '''
     users.html
     '''
+    redis_client = get_redis()
     tw_api = get_api()
     users = []
     for user in app.config['FILTER']:
-        user_payload = tw_api.get_user(user)
+        user_key = "%s%s" % (app.config['PREFIX']['user'], user)
+        try:
+            user_payload = eval(redis_client.get(user_key))
+        except TypeError:
+            user_payload = None
+
+        if user_payload:
+            print "Cache hit"
+        if not user_payload:
+            print "Cache miss"
+            user_payload = str(tw_api.get_user(user).__dict__)
+            redis_client.set(user_key, user_payload, ex=app.config['CACHE_TTL'])
+
         users.append(dict(
-            screen_name=user_payload.screen_name,
-            avatar=user_payload.profile_image_url,
-            user_id=user_payload.id,
-            bio=user_payload.description
+            screen_name=user_payload['screen_name'],
+            avatar=user_payload['profile_image_url'],
+            user_id=user_payload['id'],
+            bio=user_payload['description']
             ))
 
     return render_template('users.html', users=users)

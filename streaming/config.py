@@ -35,9 +35,12 @@ REDIS = dict(
 
 PREFIX = dict(
         new='tw-',
-        deleted='del-'
+        deleted='del-',
+        user='user-'
         )
 
 TIME_KEY = "updated-at"
 
 DEFAULT_IMAGE = "http://abs.twimg.com/sticky/default_profile_images/default_profile_4.png"
+
+CACHE_TTL = 1200 # in seconds
