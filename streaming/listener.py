@@ -87,8 +87,10 @@ class Listener(tweepy.StreamListener):
                 store_key = PREFIX['new'] + str(payload['request_id'])
                 payload['saved'] = redis_client.set(store_key.strip(), payload)
 
-            logging.info('{request_id} | {username} | {message} - {saved}'.format(
-                    **payload))
+
+            if status.user.id_str in FILTER:
+                logging.info('{request_id} | {username} | {message} - {saved}'.format(
+                        **payload))
 
 
         except Exception, err:
