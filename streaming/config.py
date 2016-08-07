@@ -23,6 +23,8 @@ TW_AUTH_CREDENTIALS['pylitwoops']['access_token_secret'] = os.getenv('TW_ACCESS_
 SENDER_ID = {}
 SENDER_ID['pylitwoops'] = '1237372231'
 
+HEARTBEAT_ACCOUNT = "1237372231" # Twitter ID of the account sending heartbeats
+
 redis_host = os.getenv('REDIS_HOST', 'localhost:6379')
 REDIS = dict(
         host=redis_host.split(':')[0],
@@ -43,4 +45,4 @@ TIME_KEY = "updated-at"
 
 DEFAULT_IMAGE = "http://abs.twimg.com/sticky/default_profile_images/default_profile_4.png"
 
-CACHE_TTL = 1200 # in seconds
+CACHE_TTL = 3600 # in seconds

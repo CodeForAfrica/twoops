@@ -6,7 +6,8 @@ import redis
 import tweepy
 import logging
 from pylitwoops.streaming.config import (
-        TW_AUTH_CREDENTIALS, SENDER_ID, FILTER, REDIS, PREFIX, TIME_KEY)
+        TW_AUTH_CREDENTIALS, SENDER_ID, FILTER, REDIS, PREFIX, TIME_KEY,
+        HEARTBEAT_ACCOUNT)
 
 PRINCIPLE_TW_HANDLE = 'pylitwoops'
 
@@ -79,7 +80,7 @@ class Listener(tweepy.StreamListener):
                       message=str(status.text.encode('utf-8'))
                       )
 
-            if status.user.id_str in FILTER:
+            if status.user.id_str in FILTER and not status.user.id_str == HEARTBEAT_ACCOUNT:
                 # persist tweet metadata
                 redis_client = get_redis()
                 store_key = PREFIX['new'] + str(payload['request_id'])

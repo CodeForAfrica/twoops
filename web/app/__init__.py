@@ -31,11 +31,13 @@ def counties():
     try:
         last_updated, delete_count = redis_client.get(app.config['TIME_KEY']).split('|')
     except:
-        last_updated = delete_count = ""
+        last_updated = delete_count = "0"
     entries = redis_client.keys("%s*" % app.config['PREFIX']['deleted'])
     deleted_tweets = []
     for entry in entries:
         deleted_tweet = eval(redis_client.get(entry))
+        if str(deleted_tweet.get('sender_id')) == app.config['HEARTBEAT_ACCOUNT']:
+            continue
         if "avatar" not in deleted_tweet:
             deleted_tweet['avatar'] = app.config['DEFAULT_IMAGE']
         deleted_tweets.append(deleted_tweet)
@@ -68,12 +70,13 @@ def tracked_users():
             user_payload = tw_api.get_user(user)._json
             redis_client.set(user_key, user_payload, ex=app.config['CACHE_TTL'])
 
-        users.append(dict(
-            screen_name=user_payload['screen_name'],
-            avatar=user_payload['profile_image_url'],
-            user_id=user_payload['id'],
-            bio=user_payload['description']
-            ))
+        if not str(user_payload['id']) == app.config['HEARTBEAT_ACCOUNT']:
+            users.append(dict(
+                screen_name=user_payload['screen_name'],
+                avatar=user_payload['profile_image_url'],
+                user_id=user_payload['id'],
+                bio=user_payload['description']
+                ))
 
     return render_template('users.html', users=users)
 
