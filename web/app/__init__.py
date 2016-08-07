@@ -28,7 +28,10 @@ def counties():
     '''
     redis_client = get_redis()
 
-    last_updated, delete_count = redis_client.get(app.config['TIME_KEY']).split('|')
+    try:
+        last_updated, delete_count = redis_client.get(app.config['TIME_KEY']).split('|')
+    except:
+        last_updated = delete_count = ""
     entries = redis_client.keys("%s*" % app.config['PREFIX']['deleted'])
     deleted_tweets = []
     for entry in entries:
@@ -62,7 +65,7 @@ def tracked_users():
             print "Cache hit"
         if not user_payload:
             print "Cache miss"
-            user_payload = str(tw_api.get_user(user).__dict__)
+            user_payload = tw_api.get_user(user)._json
             redis_client.set(user_key, user_payload, ex=app.config['CACHE_TTL'])
 
         users.append(dict(
