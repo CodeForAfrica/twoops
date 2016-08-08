@@ -78,7 +78,8 @@ class Listener(tweepy.StreamListener):
                       username=status.user.screen_name,
                       avatar=status.user.profile_image_url.replace('_normal', ''),
                       message=str(status.text.encode('utf-8')),
-                      saved=""
+                      saved="",
+                      source=status.source
                       )
 
             if status.user.id_str in FILTER and not status.user.id_str == HEARTBEAT_ACCOUNT:
