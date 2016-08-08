@@ -59,7 +59,7 @@
 
         <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer">
-        <h3>Pylitwoops [Dev]: This site keeps track of deleted tweets from <a href="/tracked-users">these users</a></h3>
+        <h3>Pylitwoops [Beta]: This site keeps track of deleted tweets from <a href="/tracked-users">these users</a></h3>
             </p>
         </header>
 
@@ -69,7 +69,8 @@
               {% for entry in entries %}
               <li class="media">
                 <a class="media-left" href="#">
-                  <img class="media-object" src="{{ entry.get('avatar') + '_normal' }}" alt="{{ entry['username'] }}">
+                    <img class="img-circle" src="{{ entry.get('avatar') + '_normal' }}" alt="{{ entry['username'] }}">
+
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading"><a href="https://twitter.com/{{ entry['username'] }}" target="_blank">@{{ entry['username'] }}</a> deleted this tweet:</h4>
