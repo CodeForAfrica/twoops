@@ -59,54 +59,36 @@
 
         <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer">
-            <h3>Pylitwoops [Dev]</h3>
+        <h3>Pylitwoops [Dev]: This site keeps track of deleted tweets from <a href="/tracked-users">these users</a></h3>
             </p>
         </header>
 
         <hr>
 
-        <!-- Title -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h3>Deleted Tweets</h3>
-            </div>
-        </div>
-        <!-- /.row -->
-
-        <!-- Page Features -->
-        <div class="row text-center">
-
-            
-            {% for entry in entries %}
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="" alt="">
-                    <div class="caption">
-                        <a target="_blank" href="https://twitter.com/{{entry['username']}}"><h3>@{{ entry['username'] }} deleted this tweet:</h3></a>
+            <ul class="media-list">
+              {% for entry in entries %}
+              <li class="media">
+                <a class="media-left" href="#">
+                  <img class="media-object" src="{{ entry.get('avatar') + '_normal' }}" alt="{{ entry['username'] }}">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading"><a href="https://twitter.com/{{ entry['username'] }}" target="_blank">@{{ entry['username'] }}</a> deleted this tweet:</h4>
                         <blockquote class="blockquote">
-                          <p class="m-b-0">
-                            {{ entry['message'].decode('utf-8') }} 
-                          </p>
+                            <p class="m-b-0">{{ entry['message'] }}</p>
                         </blockquote>
-                        <br>
+
                         <p class="text-muted">Posted on {{ entry['created_at'] }}</p> 
                         {% if entry.get('source') %}
                         <p class="text-muted">via {{ entry.get('source') }}</p>
-                        {% endif %}
-                        <p>
-                        <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }}" class="btn btn-info">Reply to @{{ entry['username'] }}</a> <br> <br>
-                        <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} deleted this tweet: {{ entry['message'] }}" class="btn btn-info">Share on Twitter</a>
-                        </p>
-                    </div>
+                    {% endif %}
+                    <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }}" class="btn btn-info">Reply to @{{ entry['username'] }}</a>
+                    <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} deleted this tweet: {{ entry['message'] }}" class="btn btn-info">Share on Twitter</a>
                 </div>
-            </div>
+                </li>
+                <hr>
             {% endfor %}
+            </ul>
 
-
-        </div>
-        <!-- /.row -->
-
-        <hr>
         <p>Last updated: {{ last_updated }} | Delete count at last run: {{ delete_count }}</p>
 
         <!-- Footer -->

@@ -64,33 +64,24 @@
         <div class="row">
             <div class="col-lg-12">
                 <h3>Twitter accounts that we are tracking</h3>
+                <hr>
             </div>
         </div>
         <!-- /.row -->
+        
+        <div class="col-lg-8">
 
-        <!-- Page Features -->
-        <div class="row text-center">
-            
-            {% for user in users %}
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="{{ user['avatar'] }}" alt="">
-                    <div class="caption">
-                        <h3>{{ user['screen_name'] }}</h3>
-                        <p> {{ user['bio'] }} </p>
-                        <p>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-
-
+        {% for user in users %}
+        <div class="list-group">
+            <a target="_blank" href="https://twitter.com/{{ user['screen_name'] }}" class="list-group-item active">
+            <h4 class="list-group-item-heading">@{{ user['screen_name'] }}</h4>
+            <p class="list-group-item-text">{{ user['bio'] }}</p>
+          </a>
         </div>
-        <!-- /.row -->
-
-
+        {% endfor %}
+ 
         <hr>
+        </div>
 
         <!-- Footer -->
         <footer>
