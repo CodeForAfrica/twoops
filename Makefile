@@ -12,3 +12,6 @@ startstreaming:
 
 heartbeat:
 	python worker/heartbeat.py
+
+user-refresh:
+	python scripts/lists.py refresh 763301230999404544
