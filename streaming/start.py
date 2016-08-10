@@ -13,6 +13,6 @@ logging.info("Initiating stream...")
 lstnr = listener.Listener()
 tweepy.Stream(
         listener.get_api(auth_only=True), lstnr).filter(
-                follow=listener.FILTER).on_closed(
+                follow=listener.get_users(raw=True)).on_closed(
                         lstnr.on_dropped_connection())
 logging.info("Stream started.")

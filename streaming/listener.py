@@ -61,12 +61,23 @@ def check_rate_limits(endpoint="/statuses/show/:id"):
         print "ERROR: Cannot get rate limits - %s" % str(err)
 
 
+def get_users(raw=False):
+    redis_client = get_redis()
+    users = redis_client.keys("%s*" % PREFIX['user'])
+    if raw:
+        raw_users = []
+        for each in users:
+            raw_users.append(each.replace(PREFIX['user'], ''))
+        return raw_users
+    return users
+
+
 class Listener(tweepy.StreamListener):
     """
     instance of tweepy's StreamListener
     """
     REDIS_CLIENT = get_redis()
-    FILTER = REDIS_CLIENT.keys("%s*" % PREFIX['user'])
+    FILTER = get_users()
 
     def on_status(self, status):
         """
