@@ -6,7 +6,7 @@ import redis
 import tweepy
 import logging
 from pylitwoops.streaming.config import (
-        TW_AUTH_CREDENTIALS, SENDER_ID, FILTER, REDIS, PREFIX, TIME_KEY,
+        TW_AUTH_CREDENTIALS, SENDER_ID, REDIS, PREFIX, TIME_KEY,
         HEARTBEAT_ACCOUNT)
 
 PRINCIPLE_TW_HANDLE = 'pylitwoops'
@@ -65,6 +65,8 @@ class Listener(tweepy.StreamListener):
     """
     instance of tweepy's StreamListener
     """
+    REDIS_CLIENT = get_redis()
+    FILTER = REDIS_CLIENT.keys("%s*" % PREFIX['user'])
 
     def on_status(self, status):
         """
@@ -82,17 +84,15 @@ class Listener(tweepy.StreamListener):
                       source=status.source
                       )
 
-            if status.user.id_str in FILTER and not status.user.id_str == HEARTBEAT_ACCOUNT:
+            prefixed_user_id = "%s%s" % (PREFIX['user'], status.user.id_str)
+            if prefixed_user_id in FILTER and not status.user.id_str == HEARTBEAT_ACCOUNT:
                 # persist tweet metadata
-                redis_client = get_redis()
                 store_key = PREFIX['new'] + str(payload['request_id'])
-                payload['saved'] = redis_client.set(store_key.strip(), payload)
+                payload['saved'] = REDIS_CLIENT.set(store_key.strip(), payload)
 
-
-            if status.user.id_str in FILTER:
+            if prefixed_user_id in FILTER:
                 logging.info('{request_id} | {username} | {message} - {saved}'.format(
                         **payload))
-
 
         except Exception, err:
             logging.error('on_status -- {}'.format(str(err)))

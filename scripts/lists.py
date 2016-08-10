@@ -37,6 +37,17 @@ def list_members(list_id):
     return members
 
 
+def refresh(list_id):
+    r = listener.get_redis()
+    members = list_members(list_id)
+    for member in members:
+        user_key = "%s%s" % (config.PREFIX['user'], str(member.id))
+        print r.set(user_key, member._json)
+    print "Saved %s members from list %s" % (len(members), list_id)
+    r.save()
+
+
+
 
 if __name__ == "__main__":
     actions = ['create', 'add', 'list']
@@ -54,3 +65,6 @@ if __name__ == "__main__":
     elif action == 'list':
         list_id = sys.argv[2]
         list_members(int(list_id))
+    elif action == 'refresh':
+        list_id = sys.argv[2]
+        refresh(list_id)
