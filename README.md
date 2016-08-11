@@ -1,7 +1,7 @@
-# pylitwoops
+## pylitwoops
 Python port of [politwoops](https://github.com/sunlightlabs/politwoops)
 
-### Components
+## Components
 
 1. Streaming listener
 2. Deletion checker (scheduled task)
@@ -26,10 +26,10 @@ Installation:
 * Start web server: `make runwebserver`
 * Start streaming service: `make stream`
 
-# Adding users to the master list:
+## Adding users to the master list:
 * To add user(s) to the list: `python scripts/lists.py add <LIST-ID> <USER-ID-1>,<USER-ID-2>,<USER-ID-3>`
 * To refresh the cache:  `make user-refresh`
 
-# To run the deletion checker:
+## To run the deletion checker:
 
 `make runscript`
