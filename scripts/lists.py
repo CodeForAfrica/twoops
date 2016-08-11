@@ -2,15 +2,17 @@
 Lists manipulation
 
 Usage:
-    python scripts/lists.py create test-two private
+    python scripts/lists.py create <list-name> <private/public>
 
-    python scripts/lists.py add 763292547754131456 3332342333,183165874,726748106,295663598,2515899612
+    python scripts/lists.py add <list-id> <user-id-1>,<user-id-2>,<user-id-3>
 
     python scripts/lists.py list_by_id <list-id>
 
     python scripts/lists.py list_by_name <name> <list-name>
 
     python scripts/lists.py import <from-list> <to-list>
+
+    python scripts/lists.py refresh <list-id>
 
 """
 import sys, time
@@ -19,6 +21,9 @@ from pylitwoops.worker.check import chunkify
 
 
 def new_list(list_name, mode='private'):
+    """
+    creates a new private (unless specified by `mode`) Twitter List
+    """
     t = listener.get_api()
     created = t.create_list(name=list_name, mode=mode)
     print "Created %s list: %s - %s" % (mode, created.name, created.id)
@@ -26,6 +31,12 @@ def new_list(list_name, mode='private'):
 
 
 def add_list_member(list_id, members=[]):
+    """
+    Adds members whose USER_IDs are in `members` to list `list_id`
+
+    @list_id:  an <int> ID of the Twitter List
+    @members:  a <list> of user <int> USER_IDs
+    """
     t = listener.get_api()
     for member in members:
         assert isinstance(member, int)
@@ -35,6 +46,9 @@ def add_list_member(list_id, members=[]):
 
 
 def list_members(list_id):
+    """
+    Returns up to 500 members of list `list_id`
+    """
     t = listener.get_api()
     members = t.list_members(list_id=int(list_id), count=500)
     for member in members:
@@ -44,6 +58,9 @@ def list_members(list_id):
 
 
 def list_members_by_name(owner_name, list_slug):
+    """
+    Returns up to 500 members of the list `list_slug` owned by `owner_name`
+    """
     t = listener.get_api()
     _list = t.get_list(owner_screen_name=str(owner_name), slug=str(list_slug))
     members = t.list_members(owner_screen_name=str(owner_name), slug=str(list_slug), count=500)
@@ -54,6 +71,9 @@ def list_members_by_name(owner_name, list_slug):
 
 
 def refresh(list_id):
+    """
+    Fetches members of list `list_id` from Twitter and adds them to cache.
+    """
     r = listener.get_redis()
     members = list_members(list_id)
     for member in members:
@@ -64,6 +84,12 @@ def refresh(list_id):
 
 
 def _import(from_list_id, to_list_id):
+    """
+    Imports users from Twitter List `from_list_id` to Twitter List `to_list_id`
+
+    @from_list_id:  <int>  The ID of the Twitter List from which to import
+    @to_list_id:    <int>  The ID of the Twitter List to add imported users
+    """
     t = listener.get_api()
     from_list = t.get_list(list_id=int(from_list_id))
     to_list = t.get_list(list_id=int(to_list_id))
