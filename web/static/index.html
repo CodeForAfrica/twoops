@@ -75,7 +75,7 @@
                 <div class="media-body">
                     <h4 class="media-heading"><a href="https://twitter.com/{{ entry['username'] }}" target="_blank">@{{ entry['username'] }}</a> deleted this tweet:</h4>
                         <blockquote class="blockquote">
-                            <p class="m-b-0">{{ entry['message'] }}</p>
+                            <p class="m-b-0">{{ entry['message'].decode('utf-8') }}</p>
                         </blockquote>
 
                         <p class="text-muted">Posted on {{ entry['created_at'] }}</p> 
@@ -83,7 +83,7 @@
                         <p class="text-muted">via {{ entry.get('source') }}</p>
                     {% endif %}
                     <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }}" class="btn btn-info">Reply to @{{ entry['username'] }}</a>
-                    <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} deleted this tweet: {{ entry['message'] }}" class="btn btn-info">Share on Twitter</a>
+                    <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} deleted this tweet: {{ entry['message'].decode('utf-8') }}" class="btn btn-info">Share on Twitter</a>
                 </div>
                 </li>
                 <hr>
