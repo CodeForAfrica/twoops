@@ -20,6 +20,7 @@ Installation:
 * Clone the source: `git clone https://github.com/andkamau/pylitwoops`
 * Set up a new virtualenv: `virtualenv ~/pylitwoops`
 * Export env variables on `pylitwoops.env`
+* Install python dependencies:  `pip install -r requirements.txt`
 * Create master list: `python scripts/lists.py create my-tracking-list private`
 * Add users to your master list: `python scripts/lists.py add <LIST-ID> <USER-ID-1>,<USER-ID-2>,<USER-ID-3>`
 * Configure scheduled tasks on cron as per `pylitwoops-cron.txt`
