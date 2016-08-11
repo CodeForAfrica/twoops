@@ -6,11 +6,16 @@ Usage:
 
     python scripts/lists.py add 763292547754131456 3332342333,183165874,726748106,295663598,2515899612
 
-    python scripts/lists.py list 763292547754131456
+    python scripts/lists.py list_by_id <list-id>
+
+    python scripts/lists.py list_by_name <name> <list-name>
+
+    python scripts/lists.py import <from-list> <to-list>
 
 """
 import sys, time
 from pylitwoops.streaming import listener, config
+from pylitwoops.worker.check import chunkify
 
 
 def new_list(list_name, mode='private'):
@@ -73,8 +78,11 @@ def _import(from_list_id, to_list_id):
     to_members = []
     for member in from_members:
         to_members.append(member.id)
-    add_list_member(int(to_list_id), to_members)
-    print "imported %s members from %s to %s" % (len(from_members), from_list_id, to_list_id)
+
+    chunks = chunkify(to_members, 50)
+    for chunk in chunks:
+        add_list_member(int(to_list_id), chunk)
+        print "imported %s members from %s to %s" % (len(chunk), from_list_id, to_list_id)
 
 
 if __name__ == "__main__":
