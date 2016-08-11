@@ -10,8 +10,11 @@ runscript:
 startstreaming:
 	python streaming/start.py
 
+user-refresh:
+	python scripts/lists.py refresh 763301230999404544
+
+stream: user-refresh startstreaming
+
 heartbeat:
 	python worker/heartbeat.py
 
-user-refresh:
-	python scripts/lists.py refresh 763301230999404544
