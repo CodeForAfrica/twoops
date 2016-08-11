@@ -76,14 +76,14 @@ class Listener(tweepy.StreamListener):
     """
     instance of tweepy's StreamListener
     """
-    REDIS_CLIENT = get_redis()
-    FILTER = get_users()
 
     def on_status(self, status):
         """
         do this when a status comes in
         """
         try:
+            filter_ = get_users()
+            redis_client = get_redis()
             payload = dict(
                       request_id=status.id,
                       created_at=status.created_at,
@@ -96,12 +96,12 @@ class Listener(tweepy.StreamListener):
                       )
 
             prefixed_user_id = "%s%s" % (PREFIX['user'], status.user.id_str)
-            if prefixed_user_id in FILTER and not status.user.id_str == HEARTBEAT_ACCOUNT:
+            if prefixed_user_id in filter_ and not status.user.id_str == HEARTBEAT_ACCOUNT:
                 # persist tweet metadata
                 store_key = PREFIX['new'] + str(payload['request_id'])
-                payload['saved'] = REDIS_CLIENT.set(store_key.strip(), payload)
+                payload['saved'] = redis_client.set(store_key.strip(), payload)
 
-            if prefixed_user_id in FILTER:
+            if prefixed_user_id in filter_:
                 logging.info('{request_id} | {username} | {message} - {saved}'.format(
                         **payload))
 
