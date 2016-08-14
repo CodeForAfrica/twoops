@@ -41,7 +41,7 @@ def counties():
         if "avatar" not in deleted_tweet:
             deleted_tweet['avatar'] = app.config['DEFAULT_IMAGE']
         deleted_tweets.append(deleted_tweet)
-        sorted_deleted_tweets = sorted(deleted_tweets, key=lambda k: k['created_at'], reverse=True)
+    sorted_deleted_tweets = sorted(deleted_tweets, key=lambda k: k['created_at'], reverse=True)
         
     return render_template("index.html",
             entries=sorted_deleted_tweets,
