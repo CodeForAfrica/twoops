@@ -66,7 +66,7 @@
         <hr>
 
             <ul class="media-list">
-              {% for entry in entries %}
+              {% for entry in pages[page] %}
               <li class="media">
                 <a class="media-left" href="#">
                     <img class="img-circle" src="{{ entry.get('avatar') + '_normal' }}" alt="{{ entry['username'] }}">
@@ -90,7 +90,28 @@
             {% endfor %}
             </ul>
 
-        <p>Last updated: {{ last_updated }} | Delete count at last run: {{ delete_count }}</p>
+            
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a class="page-link" href="?page=0" aria-label="Previous">
+                    <span aria-hidden="true">«« First Page</span>
+                  </a>
+                </li>
+                {% for page in range(0, pagecount) %}
+                <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                {% endfor %}
+                <li class="page-item">
+                <a class="page-link" href="?page={{ pagecount - 1 }}" aria-label="Next">
+                    <span aria-hidden="true">Last page »»</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+
+            
+            
+            <p>Last updated: {{ last_updated }} | Delete count at last run: {{ delete_count }}</p>
 
         <!-- Footer -->
         <footer>

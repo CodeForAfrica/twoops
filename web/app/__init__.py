@@ -7,6 +7,7 @@ from flask import (Flask, g, request, session, redirect,
 from flask_script import Manager
 from pylitwoops.streaming import config as config_file
 from pylitwoops.streaming.listener import get_api
+from pylitwoops.worker.check import chunkify
 
 app = Flask(__name__,
             template_folder=os.getenv('TEMPLATES'),
@@ -26,6 +27,7 @@ def counties():
     '''
     index.html
     '''
+    args = request.args.copy()
     redis_client = get_redis()
 
     try:
@@ -42,11 +44,17 @@ def counties():
             deleted_tweet['avatar'] = app.config['DEFAULT_IMAGE']
         deleted_tweets.append(deleted_tweet)
     sorted_deleted_tweets = sorted(deleted_tweets, key=lambda k: k['created_at'], reverse=True)
+    chunks = chunkify(sorted_deleted_tweets, app.config["PAGESIZE"])
+    print "page count: %s" % len(chunks)
         
     return render_template("index.html",
             entries=sorted_deleted_tweets,
             last_updated=last_updated,
-            delete_count=delete_count)
+            delete_count=delete_count,
+            page=int(args.get("page", 0)),
+            pages=chunks,
+            pagecount=len(chunks)
+            )
 
 
 @app.route('/tracked-users')

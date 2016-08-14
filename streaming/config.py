@@ -43,3 +43,5 @@ TIME_KEY = "updated-at"
 DEFAULT_IMAGE = "http://abs.twimg.com/sticky/default_profile_images/default_profile_4.png"
 
 CACHE_TTL = 3600 # in seconds
+
+PAGESIZE = 10 # no. of tweets per page
