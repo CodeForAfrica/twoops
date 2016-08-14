@@ -72,14 +72,17 @@ def main():
             else:
                 print "[%s]: Allowance in this window: {remaining} | Sleeping for {seconds_to_reset} secs".format(**rate_limits) % datetime.datetime.now()
                 sleep_time = rate_limits['seconds_to_reset'] + 1
+
+                now = time.asctime() + '|' + str(delete_count)
+                print "Last update: %s | Last run delete count: %s" % (now, delete_count)
+                redis_client.set(TIME_KEY, now)
                 time.sleep(sleep_time)
+
                 continue
 
-        
         now = time.asctime() + '|' + str(delete_count)
         print "Last update: %s | Last run delete count: %s" % (now, delete_count)
         redis_client.set(TIME_KEY, now)
-
 
 if __name__ == '__main__':
     main()
