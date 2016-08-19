@@ -35,6 +35,7 @@ def counties():
     except:
         last_updated = delete_count = "0"
     entries = redis_client.keys("%s*" % app.config['PREFIX']['deleted'])
+    print entries
     deleted_tweets = []
     for entry in entries:
         deleted_tweet = eval(redis_client.get(entry))
