@@ -8,6 +8,7 @@ from flask_script import Manager
 from pylitwoops.streaming import config as config_file
 from pylitwoops.streaming.listener import get_api
 from pylitwoops.worker.check import chunkify
+from flask_paginate import Pagination
 
 app = Flask(__name__,
             template_folder=os.getenv('TEMPLATES'),
@@ -65,6 +66,8 @@ def tracked_users():
     '''
     redis_client = get_redis()
     users = []
+    page = request.args.get('page', type=int, default=1)
+    per_page = 9
     for user in redis_client.keys("%s*" % app.config['PREFIX']['user']):
         user_payload = eval(redis_client.get(user))
 
@@ -75,8 +78,8 @@ def tracked_users():
                 user_id=user_payload['id'],
                 bio=user_payload['description']
                 ))
-
-    return render_template('users.html', users=users)
+    pagination = Pagination(page=page, total=len(users), search='', record_name='users')
+    return render_template('users.html', users=users[per_page * page : per_page * page + 9], pagination=pagination,)
 
 
 
