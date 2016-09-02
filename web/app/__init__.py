@@ -67,7 +67,7 @@ def tracked_users():
     redis_client = get_redis()
     users = []
     page = request.args.get('page', type=int, default=1)
-    per_page = 9
+    per_page = 18
     for user in redis_client.keys("%s*" % app.config['PREFIX']['user']):
         user_payload = eval(redis_client.get(user))
 
@@ -79,7 +79,7 @@ def tracked_users():
                 bio=user_payload['description']
                 ))
     pagination = Pagination(page=page, total=len(users), search='', record_name='users')
-    return render_template('users.html', users=users[per_page * page : per_page * page + 9], pagination=pagination,)
+    return render_template('users.html', users=users[page * per_page - per_page: page * per_page], pagination=pagination,)
 
 
 

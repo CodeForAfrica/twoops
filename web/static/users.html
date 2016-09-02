@@ -5,7 +5,7 @@
 <div class="container">
 
     <!-- Title -->
-    <div class="row">
+    <div class="row" style="padding-left: 15px;">
         <div class="col-md-12">
             <h3>Twitter accounts that we are tracking</h3>
         </div>
@@ -31,13 +31,15 @@
     <br clear="all">
     <div class="col-md-12">
 
-        {% for user in users[0:9] %}
+        {% for user in users %}
         <div class="col-md-4 col-sm-6 col-xs-12 user-card">
-            <div class="wrapper">
+            <div class="wrapper" style="height:200px;">
                 <a target="_blank" href="https://twitter.com/{{ user['screen_name'] }}">
                 <div class="top row">
                     <div class="col-md-6">
                         <img class="img-circle" src="{{ user.get('avatar') + '_normal' }}" alt="{{ user['username'] }}">
+                        <br clear="all">
+                        <h4 class="list-group-item-heading">@{{ user['screen_name'] }}</h4>
                     </div>
                     <div class="col-md-6 text-center">
                         <span class="bubble"><script>document.write(parseInt(Math.random(1) * 100))</script></span><br clear="all">
@@ -45,7 +47,6 @@
                     </div>
                 </div>
                 <div class="inner">
-                    <h4 class="list-group-item-heading">@{{ user['screen_name'] }}</h4>
                     <p class="list-group-item-text">{{ user['bio'] }}</p>
                 </div>
               </a>
@@ -56,7 +57,25 @@
         <hr>
     </div>
     <br clear="all">
-    {{ pagination.links }}
+    <div class="row text-center">
+       <nav aria-label="Page navigation">
+           <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="?page=0" aria-label="Previous">
+                        <span aria-hidden="true">First Page</span>
+                    </a>
+                </li>
+               {% for page in range(0, 4) %}
+               <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+               {% endfor %}
+               <li class="page-item">
+                    <a class="page-link" href="?page={{ 4 - 1 }}" aria-label="Next">
+                        <span aria-hidden="true">Last page</span>
+                    </a>
+                </li>
+           </ul>
+        </nav>
+    </div>
     <br clear="all">
 
 </div>

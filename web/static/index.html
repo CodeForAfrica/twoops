@@ -1,136 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Pylitwoops</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="assets/css/heroic-features.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Pylitwoops</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="/tracked-users">Tracked Users</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
+{% block content %}
+<!-- Page Content -->
     <!-- Page Content -->
     <div class="container">
-
-        <!-- Jumbotron Header -->
-        <header class="jumbotron hero-spacer">
-        <h3>Pylitwoops [Beta]: This site keeps track of deleted tweets from <a href="/tracked-users">these users</a></h3>
-            </p>
-        </header>
-
-        <hr>
-
-            <ul class="media-list">
-              {% for entry in pages[page] %}
-              <li class="media">
-                <a class="media-left" href="#">
-                    <img class="img-circle" src="{{ entry.get('avatar') + '_normal' }}" alt="{{ entry['username'] }}">
-
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading"><a href="https://twitter.com/{{ entry['username'] }}" target="_blank">@{{ entry['username'] }}</a> deleted this tweet:</h4>
-                        <blockquote class="blockquote">
+        <div class="media-list">
+            {% for entry in pages[page] %}
+            <div class="user-card" style="height:auto;margin-top:15px;padding:0px 20px;">
+                <div class="row wrapper" style="">
+                    <div class="col-md-1" style="height:100%;padding-top: 50px;">
+                        <a class="media-left" href="#" style="">
+                            <img class="img-circle" src="{{ entry.get('avatar') + '_normal' }}" alt="{{ entry['username'] }}">
+                        </a>
+                    </div>
+                    <div class="col-md-11" style="padding: 20px;">
+                        <span class="media-heading"><a href="https://twitter.com/{{ entry['username'] }}" target="_blank">@{{ entry['username'] }}</a></span> deleted this tweet:
+                        <div class="blockquote">
                             <p class="m-b-0">{{ entry['message'].decode('utf-8') }}</p>
-                        </blockquote>
+                        </div>
 
-                        <p class="text-muted">Posted on {{ entry['created_at'] }}</p> 
+                        <span class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ entry['created_at'] }}</span>
+                        &nbsp;.&nbsp;
                         {% if entry.get('source') %}
-                        <p class="text-muted">via {{ entry.get('source') }}</p>
-                    {% endif %}
-                    <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }}" class="btn btn-info">Reply to @{{ entry['username'] }}</a>
-                    <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} deleted this tweet: {{ entry['message'].decode('utf-8') }}" class="btn btn-info">Share on Twitter</a>
-                </div>
-                </li>
-                <hr>
-            {% endfor %}
-            </ul>
-
-            
-            <nav aria-label="Page navigation">
-              <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="?page=0" aria-label="Previous">
-                    <span aria-hidden="true">«« First Page</span>
-                  </a>
-                </li>
-                {% for page in range(0, pagecount) %}
-                <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
-                {% endfor %}
-                <li class="page-item">
-                <a class="page-link" href="?page={{ pagecount - 1 }}" aria-label="Next">
-                    <span aria-hidden="true">Last page »»</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-
-            
-            
-            <p>Last updated: {{ last_updated }} | Delete count at last run: {{ delete_count }}</p>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Code For Africa Tech Labs (2016)</p>
+                        <span class="text-muted">via {{ entry.get('source') }}</span>
+                        {% endif %}
+                        <span class="links">
+                            <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }}">Reply to @{{ entry['username'] }}</a>
+                            &nbsp;.&nbsp;
+                            <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} deleted this tweet: {{ entry['message'].decode('utf-8') }}" >Share on Twitter</a>
+                        </span>
+                    </div>
                 </div>
             </div>
-        </footer>
+        {% endfor %}
+        </div>
 
+
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="?page=0" aria-label="Previous">
+                <span aria-hidden="true">First Page</span>
+              </a>
+            </li>
+            {% for page in range(1, pagecount + 1) %}
+            <li class="page-item"><a class="page-link" href="?page={{ page - 1}}">{{ page -1 }}</a></li>
+            {% endfor %}
+            <li class="page-item">
+            <a class="page-link" href="?page={{ pagecount - 1 }}" aria-label="Next">
+                <span aria-hidden="true">Last page</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <p>Last updated: {{ last_updated }} | Delete count at last run: {{ delete_count }}</p>
     </div>
-    <!-- /.container -->
-
-    <!-- jQuery -->
-    <script src="assets/js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="assets/js/bootstrap.min.js"></script>
-
-</body>
-
-</html>
+{% endblock %}
