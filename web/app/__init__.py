@@ -9,6 +9,7 @@ from pylitwoops.streaming import config as config_file
 from pylitwoops.streaming.listener import get_api
 from pylitwoops.worker.check import chunkify
 from flask_paginate import Pagination
+import math
 
 app = Flask(__name__,
             template_folder=os.getenv('TEMPLATES'),
@@ -79,7 +80,8 @@ def tracked_users():
                 bio=user_payload['description']
                 ))
     pagination = Pagination(page=page, total=len(users), search='', record_name='users')
-    return render_template('users.html', users=users[page * per_page - per_page: page * per_page], pagination=pagination,)
+    pagecount = int(math.ceil( float(len(users))/per_page))
+    return render_template('users.html', users=users[page * per_page - per_page: page * per_page], pagination=pagination, pagecount=pagecount, page=page)
 
 
 
