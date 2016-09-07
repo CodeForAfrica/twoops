@@ -8,14 +8,26 @@ LOGGING['location'] = 'logs/log-pylitwoops-streaming.log'
 LOGGING['level'] = logging.DEBUG
 LOGGING['format'] = '%(asctime)s : %(levelname)s: %(message)s'
 
+PRINCIPLE_TW_HANDLE = 'pylitwoops'
+
+consumerkeys = eval(os.getenv('TW_CONSUMER_KEYS'))
+consumersecrets = eval(os.getenv('TW_CONSUMER_SECRETS'))
+tokenkeys = eval(os.getenv('TW_ACCESS_TOKEN_KEYS'))
+tokensecrets = eval(os.getenv('TW_ACCESS_TOKEN_SECRETS'))
 
 TW_AUTH_CREDENTIALS = {}
 # pylitwoops
 TW_AUTH_CREDENTIALS['pylitwoops'] = {}
-TW_AUTH_CREDENTIALS['pylitwoops']['consumer_key'] = os.getenv('TW_CONSUMER_KEY')
-TW_AUTH_CREDENTIALS['pylitwoops']['consumer_secret'] = os.getenv('TW_CONSUMER_SECRET')
-TW_AUTH_CREDENTIALS['pylitwoops']['access_token_key'] = os.getenv('TW_ACCESS_TOKEN_KEY')
-TW_AUTH_CREDENTIALS['pylitwoops']['access_token_secret'] = os.getenv('TW_ACCESS_TOKEN_SECRET')
+TW_AUTH_CREDENTIALS['pylitwoops']['consumer_key'] = consumerkeys[0]
+TW_AUTH_CREDENTIALS['pylitwoops']['consumer_secret'] = consumersecrets[0]
+TW_AUTH_CREDENTIALS['pylitwoops']['access_token_key'] = tokenkeys[0]
+TW_AUTH_CREDENTIALS['pylitwoops']['access_token_secret'] = tokensecrets[0]
+
+TW_AUTH_CREDENTIALS['pylitwoops_one'] = {}
+TW_AUTH_CREDENTIALS['pylitwoops_one']['consumer_key'] = consumerkeys[1]
+TW_AUTH_CREDENTIALS['pylitwoops_one']['consumer_secret'] = consumersecrets[1]
+TW_AUTH_CREDENTIALS['pylitwoops_one']['access_token_key'] = tokenkeys[1]
+TW_AUTH_CREDENTIALS['pylitwoops_one']['access_token_secret'] = tokensecrets[1]
 
 SENDER_ID = {}
 SENDER_ID['pylitwoops'] = '1237372231'

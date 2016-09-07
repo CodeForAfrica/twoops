@@ -7,25 +7,33 @@ import tweepy
 import logging
 from pylitwoops.streaming.config import (
         TW_AUTH_CREDENTIALS, SENDER_ID, REDIS, PREFIX, TIME_KEY,
-        HEARTBEAT_ACCOUNT)
-
-PRINCIPLE_TW_HANDLE = 'pylitwoops'
+        HEARTBEAT_ACCOUNT, PRINCIPLE_TW_HANDLE)
 
 LOGGERS = {}
 
 
-def get_api(auth_only=False):
+def get_api(auth_only=False, multi=False):
     """
-    returns authenticated API object
+    auth_only: return the OauthHandler object if True; else return the API object
+    multi:     return multiple API client objects (if available), else: only return one API client object
     """
     try:
-        creds = TW_AUTH_CREDENTIALS.get(PRINCIPLE_TW_HANDLE)
-        auth = tweepy.OAuthHandler(creds['consumer_key'], creds['consumer_secret'])
-        auth.set_access_token(creds['access_token_key'], creds['access_token_secret'])
+        api_objects = []
+        auth_objects = []
+        for account in TW_AUTH_CREDENTIALS:
+            creds = TW_AUTH_CREDENTIALS.get(account)
+            auth = tweepy.OAuthHandler(creds['consumer_key'], creds['consumer_secret'])
+            auth.set_access_token(creds['access_token_key'], creds['access_token_secret'])
+            auth_objects.append(auth)
+
+            api = tweepy.API(auth_handler=auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+            api_objects.append(api)
+
         if auth_only:
-            return auth
-        api = tweepy.API(auth_handler=auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
-        return api
+            return auth_objects[0] if not multi else auth_objects
+
+        return api_objects[0] if not multi else api_objects
+    
     except Exception, err:
         api_err = 'Cannot create API object: {}'.format(str(err))
         raise err

@@ -29,6 +29,8 @@ def chunkify(list_, size):
 
         
 def main():
+    """
+    """
     twitter_client = get_api()
     redis_client = get_redis()
     entries = redis_client.keys("%s*" % PREFIX['new'])
