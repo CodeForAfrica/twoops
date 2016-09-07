@@ -9,7 +9,7 @@
             <div class="user-card" style="height:auto;margin-top:15px;padding:0px 20px;">
                 <div class="row wrapper" style="">
                     <div class="col-md-1" style="height:100%;padding-top: 50px;">
-                        <a class="media-left" href="#" style="">
+                        <a class="media-left" href="https://twitter.com/{{ entry['username'] }}" style="" target="_blank">
                             <img class="img-circle" src="{{ entry.get('avatar') + '_normal' }}" alt="{{ entry['username'] }}">
                         </a>
                     </div>
@@ -25,9 +25,9 @@
                         <span class="text-muted">via {{ entry.get('source') }}</span>
                         {% endif %}
                         <span class="links">
-                            <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }}">Reply to @{{ entry['username'] }}</a>
+                            <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=twoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }}">Reply to @{{ entry['username'] }}</a>
                             &nbsp;.&nbsp;
-                            <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=pylitwoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} deleted this tweet: {{ entry['message'].decode('utf-8') }}" >Share on Twitter</a>
+                            <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=twoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} deleted this tweet: {{ entry['message'].decode('utf-8') }}" >Share on Twitter</a>
                         </span>
                     </div>
                 </div>

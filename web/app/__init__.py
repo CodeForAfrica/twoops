@@ -37,7 +37,6 @@ def counties():
     except:
         last_updated = delete_count = "0"
     entries = redis_client.keys("%s*" % app.config['PREFIX']['deleted'])
-    print entries
     deleted_tweets = []
     for entry in entries:
         deleted_tweet = eval(redis_client.get(entry))
@@ -48,7 +47,6 @@ def counties():
         deleted_tweets.append(deleted_tweet)
     sorted_deleted_tweets = sorted(deleted_tweets, key=lambda k: k['created_at'], reverse=True)
     chunks = chunkify(sorted_deleted_tweets, app.config["PAGESIZE"])
-    print "page count: %s" % len(chunks)
         
     return render_template("index.html",
             entries=sorted_deleted_tweets,
