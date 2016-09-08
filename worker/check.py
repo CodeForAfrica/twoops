@@ -69,10 +69,10 @@ def main():
                 print "Unexpected response for %s -- %s" % (entry, other_error)
 
 
-        duration = datetime.datetime.now() - start_time
-        now = time.asctime() + '|' + str(delete_count)
-        print "Last update: %s | Last run delete count: %s | Duration: %s seconds" % (now, delete_count, duration.seconds)
-        redis_client.set(TIME_KEY, now)
+    duration = datetime.datetime.now() - start_time
+    now = time.asctime() + '|' + str(delete_count)
+    print "Last update: %s | Last run delete count: %s | Duration: %s seconds" % (now, delete_count, duration.seconds)
+    redis_client.set(TIME_KEY, now)
 
 if __name__ == '__main__':
     main()
