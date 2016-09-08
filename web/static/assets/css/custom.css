@@ -231,10 +231,11 @@ ul {
 .jumbotron select {
     border-radius:0 !important;
 }
-
 .jumbotron input {
     border-radius: 0;
     -webkit-appearance: none;
+}
+.home-jumbotron input {
     height: 60px;
     font-size: 30px;
     text-align:center;
