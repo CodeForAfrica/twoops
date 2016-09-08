@@ -7,6 +7,7 @@ body {
     padding-right:10px;
     font-size:16px;
     cursor:pointer;
+    color:#000;
 }
 .social-btns {
     line-height: 50px;
@@ -41,14 +42,28 @@ body {
     border-color: #ccc;
     padding:0px 10px 0px 0px;
 }
+.tweet-card {
+    height:auto;
+    color: #333;
+    border-color: #ccc;
+    padding:0px 10px 0px 0px;
+}
 
-.wrapper {
+.user-card .wrapper {
     background:#fff;
     height:240px;
     border:1px solid #ccc;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
+
+.tweet-card .wrapper {
+    background:#fff;
+    border:1px solid #ccc;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
 
 .wrapper:hover {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -60,10 +75,26 @@ body {
     border-color: #ccc;
 }
 
+.tweet-card a {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
 .user-card a:hover {
     text-decoration:none;
 }
+
+.tweet-card a:hover {
+    text-decoration:none;
+}
 .user-card .inner{
+    margin-top:20px;
+    padding:10px;
+    background:#fff;
+    height: 97px;
+}
+
+.tweet-card .inner{
     margin-top:20px;
     padding:10px;
     background:#fff;
@@ -74,23 +105,24 @@ body {
 }
 .bubble {
     float: right;
-    color: #fff;
+    color: #000;
+    border-bottom:2px solid #000;
     height: 30px;
     width: 30px;
-    border-radius: 30px;
-    background-color: #CF000F;
+    /**bborder-radius: 30px;
+    ackground-color: #CF000F;**/
     line-height: 30px;
     text-align: center;
-    -webkit-box-shadow: 4px 6px 112px -26px rgba(0,0,0,1);
+    /**-webkit-box-shadow: 4px 6px 112px -26px rgba(0,0,0,1);
     -moz-box-shadow: 4px 6px 112px -26px rgba(0,0,0,1);
-    box-shadow: 4px 6px 112px -26px rgba(0,0,0,1);
+    box-shadow: 4px 6px 112px -26px rgba(0,0,0,1);**/
 }
 
 .user-search .input-group {
     padding-right:22px;
 }
 .desc {
-    color: #888;
+    color: #000;
     font-size:12px;
     float:right;
 }
@@ -176,9 +208,19 @@ ul {
     height: 40px;
 }
 .jumbotron .input-group-addon {
-    background-color: #fff;
-    border: 1px solid #fff
+    background-color: #fff !important;
+    border: 1px solid #fff !important;
 }
 .tweet-count {
     margin-right:22px;
+    border-bottom: 1px solid #
+}
+.jumbotron {
+    background: #0D68A8;color: #fff;width:100%;
+}
+.jumbotron .btn {
+    width: 24%;
+    float: right;
+    text-transform: uppercase;
+    font-weight: bold;
 }

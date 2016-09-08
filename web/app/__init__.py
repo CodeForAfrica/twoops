@@ -66,7 +66,7 @@ def tracked_users():
     '''
     redis_client = get_redis()
     users = []
-    page = request.args.get('page', type=int, default=1) - 1
+    page = request.args.get('page', type=int, default=0)
     per_page = 18
     keys = redis_client.keys("%s*" % app.config['PREFIX']['user'])
     for user in keys[page * per_page: page * per_page + per_page]:
@@ -83,7 +83,26 @@ def tracked_users():
     pagecount = int(math.ceil( float(len(keys))/per_page))
     return render_template('users.html', users=users, pagination=pagination, pagecount=pagecount, page=page, users_page=True)
 
+@app.route('/about')
+def about():
+    '''
+    about.html
+    '''
+    return render_template('about.html', about=True)
 
+@app.route('/tweet')
+def tweet():
+    '''
+    tweet.html
+    '''
+    return render_template('tweet.html', tweet=True)
+
+@app.route('/stories')
+def stories():
+    '''
+    stories.html
+    '''
+    return render_template('stories.html', stories=True)
 
 manager = Manager(app)
 

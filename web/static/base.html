@@ -56,10 +56,10 @@
                                     <a href="/tracked-users" {% if users_page %}class="active" {% endif %}>Tracked Users</a>
                                 </li>
                                 <li>
-                                    <a href="/tracked-users" {% if stories %}class="active" {% endif %}>Stories</a>
+                                    <a href="/stories" {% if stories %}class="active" {% endif %}>Stories</a>
                                 </li>
                                 <li>
-                                    <a href="/tracked-users" {% if about %}class="active" {% endif %}>About</a>
+                                    <a href="/about" {% if about %}class="active" {% endif %}>About</a>
                                 </li>
                             </ul>
                         </div>
@@ -78,7 +78,7 @@
     <br clear="all">
 
     {% if landing %}
-    <div class="jumbotron" style="background: #0D68A8;color: #fff;width:100%;">
+    <div class="jumbotron">
         <div class="container">
             <div clas="row text-center">
                 <div class="col-md-offset-2 col-md-8 col-md-offset-2 text-center">
@@ -87,7 +87,7 @@
                 </div>
                 <div class="col-md-offset-3 col-md-6 col-md-offset-3">
                     <div class="input-group">
-                        <input type="text" class="form-control search" placeholder="" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control search"  value="Search" placeholder="" aria-describedby="basic-addon2">
                         <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i> </span>
                     </div>
                 </div>
@@ -105,6 +105,27 @@
                         <option>Party A</option>
                         <option>Party B</option>
                     </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if users_page %}
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-offset-3 col-md-6 col-md-offset-3">
+                    <h2>Twitter accounts that we are tracking</h2>
+                    <p>Want us to track a public figure?</p>
+                </div>
+                <br clear="all">
+                <br clear="all">
+                <div class="col-md-offset-3 col-md-6 col-md-offset-3">
+                    <div class="input-group" style="width:75%;float:left;">
+                        <span class="input-group-addon" id="basic-addon2">@</span>
+                        <input type="text" class="form-control" value="Enter twitter handle" aria-describedby="basic-addon2" style="background:transparent;color:#fff;">
+                    </div>
+                    <button class="btn btn-default">Recommend</button>
                 </div>
             </div>
         </div>

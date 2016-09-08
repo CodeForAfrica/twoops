@@ -3,23 +3,7 @@
 {% block content %}
 <!-- Page Content -->
 <div class="container">
-
-    <!-- Title -->
-    <div class="row" style="padding-left: 15px;">
-        <div class="col-md-12">
-            <h3>Twitter accounts that we are tracking</h3>
-        </div>
-        <div class="col-md-4">
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon2">@</span>
-                <input type="text" class="form-control" placeholder="Enter twitter handle" aria-describedby="basic-addon2">
-            </div>
-            <small>Recommend users to track</small>
-        </div>
-
-    </div>
-    <hr>
-    <!-- /.row -->
+    <!--/.row -->
     <div class="row">
         <div class="col-md-4 col-md-offset-8 col-xs-12 user-search">
             <div class="input-group">
@@ -60,7 +44,7 @@
     </div>
     <br clear="all">
     <div class="row text-center">
-       <nav aria-label="Page navigation">
+       <nav aria-label="Page navigation">Pages
             <center>
               <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="?page=0">First page</a></li>
@@ -74,7 +58,7 @@
                 {% if page + 1 < pagecount %}
                 <li class="page-item"><a class="page-link" href="?page={{ page + 1}}">{{ page + 2 }}</a></li>
                 {%endif%}
-                {% if page + 2 < pagecount%}
+                {% if page + 2 < pagecount %}
                 <li class="page-item"><a class="page-link" href="?page={{ page + 2}}">{{ page + 3 }}</a></li>
                 {%endif%}
                 <li class="page-item"><a class="page-link" href="?page={{ pagecount - 1 }}">Last page</a></li>

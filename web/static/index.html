@@ -9,7 +9,7 @@
                 <strong class="pull-right tweet-count">2,300 deleted tweets</strong>
             </div>
             {% for entry in pages[page] %}
-            <div class="user-card" style="height:auto;margin-top:15px;padding:0px 20px;">
+            <div class="tweet-card" style="height:auto;margin-top:15px;padding:0px 20px;">
                 <div class="row wrapper" style="">
                     <div class="col-md-1" style="height:100%;padding-top: 50px;">
                         <a class="media-left" href="https://twitter.com/{{ entry['username'] }}" style="" target="_blank">
@@ -38,28 +38,31 @@
         {% endfor %}
         </div>
 
-
-        <nav aria-label="Page navigation">
-            <center>
-              <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="?page=0">First page</a></li>
-                {% if page - 2 > -1 %}
-                <li class="page-item"><a class="page-link" href="?page={{ page - 2}}">{{ page - 1 }}</a></li>
-                {% endif %}
-                {% if page - 1 > -1 %}
-                <li class="page-item"><a class="page-link" href="?page={{ page - 1}}">{{ page }}</a></li>
-                {% endif %}
-                <li class="page-item active"><a class="page-link" href="?page={{ page }}">{{ page + 1 }}</a></li>
-                {% if page + 1 < pagecount %}
-                <li class="page-item"><a class="page-link" href="?page={{ page + 1}}">{{ page + 2 }}</a></li>
-                {%endif%}
-                {% if page + 2 < pagecount%}
-                <li class="page-item"><a class="page-link" href="?page={{ page + 2}}">{{ page + 3 }}</a></li>
-                {%endif%}
-                <li class="page-item"><a class="page-link" href="?page={{ pagecount - 1 }}">Last page</a></li>
-              </ul>
-          </center>
-        </nav>
+        <br clear="all">
+        <div class="row text-center">
+           <nav aria-label="Page navigation">Pages
+                <center>
+                  <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="?page=0">First page</a></li>
+                    {% if page - 2 > -1 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page - 2}}">{{ page - 1 }}</a></li>
+                    {% endif %}
+                    {% if page - 1 > -1 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page - 1}}">{{ page }}</a></li>
+                    {% endif %}
+                    <li class="page-item active"><a class="page-link" href="?page={{ page }}">{{ page + 1 }}</a></li>
+                    {% if page + 1 < pagecount %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page + 1}}">{{ page + 2 }}</a></li>
+                    {%endif%}
+                    {% if page + 2 < pagecount %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page + 2}}">{{ page + 3 }}</a></li>
+                    {%endif%}
+                    <li class="page-item"><a class="page-link" href="?page={{ pagecount - 1 }}">Last page</a></li>
+                  </ul>
+              </center>
+           </nav>
+        </div>
+        <br clear="all">
 
         <p>Last updated: {{ last_updated }} | Delete count at last run: {{ delete_count }}</p>
     </div>
