@@ -1,10 +1,10 @@
 """
 check if tweet has been deleted
 """
+import requests
 import datetime, time, math
 from pylitwoops.streaming.listener import (
-        get_redis, get_api, tweepy, PREFIX, TIME_KEY,
-        check_rate_limits)
+        get_redis, tweepy, PREFIX, TIME_KEY)
 
 
 def chunkify(list_, size):
@@ -31,7 +31,7 @@ def chunkify(list_, size):
 def main():
     """
     """
-    twitter_client = get_api()
+    start_time = datetime.datetime.now()
     redis_client = get_redis()
     entries = redis_client.keys("%s*" % PREFIX['new'])
 
@@ -48,43 +48,31 @@ def main():
             status_id = entry.replace(PREFIX['new'], '')
 
             try: # check if it's still on twitter
-                status = twitter_client.get_status(status_id)
-                print "%s check" % entry
-            except tweepy.error.TweepError, err:
+                status = requests.get("https://twitter.com/{username}/status/{request_id}".format(**saved_status))
+                print "%s check | %s" % (entry, status.status_code)
+                status.raise_for_status()
+
+            except requests.exceptions.HTTPError:
                 deleted = redis_client.delete(entry)
-                print "ER: %s -- %s -- %s" % (entry, err, deleted)
+                print "ERR: %s -- %s" % (entry, deleted)
                  
-                if err.message[0]['code'] == 144:
+                if status.status_code == 404:
                     store_key = PREFIX['deleted'] + str(status_id)
                     saved_status['saved'] = redis_client.set(store_key, saved_status)
                     print "DELETED!!!  --  {request_id}  --  {username}: {message} -- {saved}".format(**saved_status)
                     delete_count += 1
                 else:
-                    print "Unexpected response for %s -- %s" % (entry, err)
+                    print "Unexpected response for %s -- %s: %s" % (entry, status.status_code, status.reason)
+
+
             except Exception, other_error:
                 print "Unexpected response for %s -- %s" % (entry, other_error)
 
 
-        if len(chunks) > 1:
-            # can we run another chunk at current rate limits?
-            rate_limits = check_rate_limits()
-            if rate_limits['remaining'] >= chunk_size:
-                print "[%s]: Remaining allowance in this window: {remaining} | No time to sleep".format(**rate_limits) % datetime.datetime.now()
-                continue
-            else:
-                print "[%s]: Allowance in this window: {remaining} | Sleeping for {seconds_to_reset} secs".format(**rate_limits) % datetime.datetime.now()
-                sleep_time = rate_limits['seconds_to_reset'] + 1
-
-                now = time.asctime() + '|' + str(delete_count)
-                print "Last update: %s | Last run delete count: %s" % (now, delete_count)
-                redis_client.set(TIME_KEY, now)
-                time.sleep(sleep_time)
-
-                continue
-
-        now = time.asctime() + '|' + str(delete_count)
-        print "Last update: %s | Last run delete count: %s" % (now, delete_count)
-        redis_client.set(TIME_KEY, now)
+    duration = datetime.datetime.now() - start_time
+    now = time.asctime() + '|' + str(delete_count)
+    print "Last update: %s | Last run delete count: %s | Duration: %s seconds" % (now, delete_count, duration.seconds)
+    redis_client.set(TIME_KEY, now)
 
 if __name__ == '__main__':
     main()
