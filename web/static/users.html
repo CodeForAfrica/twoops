@@ -44,10 +44,12 @@
     </div>
     <br clear="all">
     <div class="row text-center">
-       <nav aria-label="Page navigation">Pages
+       <nav aria-label="Page navigation">
             <center>
               <ul class="pagination">
+                {% if page != 0 %}
                 <li class="page-item"><a class="page-link" href="?page=0">First page</a></li>
+                {% endif %}
                 {% if page - 2 > -1 %}
                 <li class="page-item"><a class="page-link" href="?page={{ page - 2}}">{{ page - 1 }}</a></li>
                 {% endif %}
@@ -61,7 +63,9 @@
                 {% if page + 2 < pagecount %}
                 <li class="page-item"><a class="page-link" href="?page={{ page + 2}}">{{ page + 3 }}</a></li>
                 {%endif%}
+                {% if (page + 1) < pagecount %}
                 <li class="page-item"><a class="page-link" href="?page={{ pagecount - 1 }}">Last page</a></li>
+                {% endif %}
               </ul>
           </center>
         </nav>
