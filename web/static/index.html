@@ -5,6 +5,9 @@
     <!-- Page Content -->
     <div class="container">
         <div class="media-list">
+            <div class="row">
+                <strong class="pull-right tweet-count">2,300 deleted tweets</strong>
+            </div>
             {% for entry in pages[page] %}
             <div class="user-card" style="height:auto;margin-top:15px;padding:0px 20px;">
                 <div class="row wrapper" style="">
@@ -18,7 +21,7 @@
                         <div class="blockquote">
                             <p class="m-b-0">{{ entry['message'].decode('utf-8') }}</p>
                         </div>
-
+                        <hr>
                         <span class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ entry['created_at'] }}</span>
                         &nbsp;.&nbsp;
                         {% if entry.get('source') %}
@@ -39,7 +42,7 @@
         <nav aria-label="Page navigation">
             <center>
               <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="?page=1">First page</a></li>
+                <li class="page-item"><a class="page-link" href="?page=0">First page</a></li>
                 {% if page - 2 > -1 %}
                 <li class="page-item"><a class="page-link" href="?page={{ page - 2}}">{{ page - 1 }}</a></li>
                 {% endif %}
@@ -47,13 +50,13 @@
                 <li class="page-item"><a class="page-link" href="?page={{ page - 1}}">{{ page }}</a></li>
                 {% endif %}
                 <li class="page-item active"><a class="page-link" href="?page={{ page }}">{{ page + 1 }}</a></li>
-                {% if page + 2 < pagecount %}
-                <li class="page-item"><a class="page-link" href="?page={{ page + 2}}">{{ page + 2 }}</a></li>
+                {% if page + 1 < pagecount %}
+                <li class="page-item"><a class="page-link" href="?page={{ page + 1}}">{{ page + 2 }}</a></li>
                 {%endif%}
-                {% if page + 3 < pagecount%}
-                <li class="page-item"><a class="page-link" href="?page={{ page + 3}}">{{ page + 3 }}</a></li>
+                {% if page + 2 < pagecount%}
+                <li class="page-item"><a class="page-link" href="?page={{ page + 2}}">{{ page + 3 }}</a></li>
                 {%endif%}
-                <li class="page-item"><a class="page-link" href="?page={{ pagecount }}">Last page</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ pagecount - 1 }}">Last page</a></li>
               </ul>
           </center>
         </nav>

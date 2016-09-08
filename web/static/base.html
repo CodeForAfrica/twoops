@@ -16,7 +16,7 @@
 
     <!-- Custom CSS -->
     <link href="/assets/css/custom.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,600,600italic,700,300,300italic' rel='stylesheet' type='text/css'>
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,47 +28,88 @@
 
 </head>
 
-<body style="padding-top:25px;">
+<body>
     <div clas="nav-top row">
         <div class="container">
-            <div class="col-md-4 topbrand">
-                <a href="/"><h1>Twoops!</h1></a>
+            <div class="col-md-4 col-sm-4 topbrand">
+                <a href="/"><h1><b>Tw</b>oops!</h1></a>
             </div>
-            <div class="col-md-6"></div>
-            <div class="social-btns col-md-2 text-right" style="line-height:70px;">
-                <i class="fa fa-facebook"></i>
-                <i class="fa fa-twitter"></i>
+            <div class="col-md-4 col-sm-7 col-md-offset-3 text-right">
+                <nav class="navbar" role="navigation">
+                    <div class="container">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top:24px;">
+                            <ul class="nav navbar-nav">
+                                 <li>
+                                    <a href="/" {% if landing %}class="active" {% endif %}>Deleted Tweets</a>
+                                </li>
+                                <li>
+                                    <a href="/tracked-users" {% if users_page %}class="active" {% endif %}>Tracked Users</a>
+                                </li>
+                                <li>
+                                    <a href="/tracked-users" {% if stories %}class="active" {% endif %}>Stories</a>
+                                </li>
+                                <li>
+                                    <a href="/tracked-users" {% if about %}class="active" {% endif %}>About</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                    </div>
+                    <!-- /.container -->
+                </nav>
+                <!-- Navigation -->
+            </div>
+            <div class="social-btns col-md-1 col-sm-1 text-right" style="line-height:70px;">
+                <a href="https://www.facebook.com/CodeForAfrica/"><i class="fa fa-facebook"></i></a>
+                <a href="https://twitter.com/Code4Africa"><i class="fa fa-twitter"></i></a>
             </div>
         </div>
     </div>
     <br clear="all">
-    <!-- Navigation -->
-    <nav class="navbar" role="navigation">
+
+    {% if landing %}
+    <div class="jumbotron" style="background: #0D68A8;color: #fff;width:100%;">
         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+            <div clas="row text-center">
+                <div class="col-md-offset-2 col-md-8 col-md-offset-2 text-center">
+                    <h2> An archive of public tweets deleted by public figures</h2>
+                    <p>Explore the tweets they would prefer you couldn't see.</p>
+                </div>
+                <div class="col-md-offset-3 col-md-6 col-md-offset-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control search" placeholder="" aria-describedby="basic-addon2">
+                        <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i> </span>
+                    </div>
+                </div>
+                <br clear="all">
+                <br clear="all">
+                <br clear="all">
+                <div class="col-md-offset-3 col-md-6 col-md-offset-3">
+                    <select class="form-control country-sel pull-left" style="width:45%">
+                        <option>Filter by Country</option>
+                        <option>Country A</option>
+                        <option>Country B</option>
+                    </select>
+                     <select class="form-control country-sel pull-right" style="width:45%">
+                        <option>Filter by Party</option>
+                        <option>Party A</option>
+                        <option>Party B</option>
+                    </select>
+                </div>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                     <li>
-                        <a href="/">Deleted Tweets</a>
-                    </li>
-                    <li>
-                        <a href="/tracked-users">Tracked Users</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
-    </nav>
+    </div>
+    {% endif %}
 
     {% block content %}
     {% endblock %}

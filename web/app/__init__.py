@@ -54,7 +54,8 @@ def counties():
             delete_count=delete_count,
             page=int(args.get("page", 0)),
             pages=chunks,
-            pagecount=len(chunks)
+            pagecount=len(chunks),
+            landing=True,
             )
 
 
@@ -80,7 +81,7 @@ def tracked_users():
                 ))
     pagination = Pagination(page=page, total=len(users), search='', record_name='users')
     pagecount = int(math.ceil( float(len(keys))/per_page))
-    return render_template('users.html', users=users, pagination=pagination, pagecount=pagecount, page=page)
+    return render_template('users.html', users=users, pagination=pagination, pagecount=pagecount, page=page, users_page=True)
 
 
 

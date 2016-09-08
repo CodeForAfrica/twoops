@@ -21,7 +21,7 @@
     <hr>
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-4 col-md-offset-8 col-xs-12 search">
+        <div class="col-md-4 col-md-offset-8 col-xs-12 user-search">
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon2">
               <span class="input-group-addon" id="basic-addon2"><i class="glyphicon glyphicon-search"></i></span>
@@ -33,11 +33,12 @@
 
         {% for user in users %}
         <div class="col-md-4 col-sm-6 col-xs-12 user-card">
-            <div class="wrapper" style="height:200px;">
+            <div class="wrapper">
                 <a target="_blank" href="https://twitter.com/{{ user['screen_name'] }}">
                 <div class="top row">
                     <div class="col-md-6">
                         <img class="img-circle" src="{{ user.get('avatar') + '_normal' }}" alt="{{ user['username'] }}">
+                        <br clear="all">
                         <br clear="all">
                         <h4 class="list-group-item-heading">@{{ user['screen_name'] }}</h4>
                     </div>
@@ -46,6 +47,7 @@
                         <span class="desc">tweets</span>
                     </div>
                 </div>
+                <hr>
                 <div class="inner">
                     <p class="list-group-item-text">{{ user['bio'] }}</p>
                 </div>
@@ -61,7 +63,7 @@
        <nav aria-label="Page navigation">
             <center>
               <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="?page=1">First page</a></li>
+                <li class="page-item"><a class="page-link" href="?page=0">First page</a></li>
                 {% if page - 2 > -1 %}
                 <li class="page-item"><a class="page-link" href="?page={{ page - 2}}">{{ page - 1 }}</a></li>
                 {% endif %}
@@ -69,13 +71,13 @@
                 <li class="page-item"><a class="page-link" href="?page={{ page - 1}}">{{ page }}</a></li>
                 {% endif %}
                 <li class="page-item active"><a class="page-link" href="?page={{ page }}">{{ page + 1 }}</a></li>
-                {% if page + 2 < pagecount %}
-                <li class="page-item"><a class="page-link" href="?page={{ page + 2}}">{{ page + 2 }}</a></li>
+                {% if page + 1 < pagecount %}
+                <li class="page-item"><a class="page-link" href="?page={{ page + 1}}">{{ page + 2 }}</a></li>
                 {%endif%}
-                {% if page + 3 < pagecount%}
-                <li class="page-item"><a class="page-link" href="?page={{ page + 3}}">{{ page + 3 }}</a></li>
+                {% if page + 2 < pagecount%}
+                <li class="page-item"><a class="page-link" href="?page={{ page + 2}}">{{ page + 3 }}</a></li>
                 {%endif%}
-                <li class="page-item"><a class="page-link" href="?page={{ pagecount }}">Last page</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ pagecount - 1 }}">Last page</a></li>
               </ul>
           </center>
         </nav>
