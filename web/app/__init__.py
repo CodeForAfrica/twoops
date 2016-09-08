@@ -67,7 +67,7 @@ def tracked_users():
     redis_client = get_redis()
     users = []
     page = request.args.get('page', type=int, default=0)
-    per_page = 18
+    per_page = 9
     keys = redis_client.keys("%s*" % app.config['PREFIX']['user'])
     for user in keys[page * per_page: page * per_page + per_page]:
         user_payload = eval(redis_client.get(user))

@@ -105,8 +105,8 @@ body {
 }
 .bubble {
     float: right;
-    color: #000;
-    border-bottom:2px solid #000;
+    color: #fff;
+    background: #cd0033;
     height: 30px;
     width: 30px;
     /**bborder-radius: 30px;
@@ -210,6 +210,9 @@ ul {
 .jumbotron .input-group-addon {
     background-color: #fff !important;
     border: 1px solid #fff !important;
+    border-radius: 0;
+    -webkit-appearance: none;
+    padding: 7px 30px;
 }
 .tweet-count {
     margin-right:22px;
@@ -223,4 +226,16 @@ ul {
     float: right;
     text-transform: uppercase;
     font-weight: bold;
+    border-radius: 0px;
+}
+.jumbotron select {
+    border-radius:0 !important;
+}
+
+.jumbotron input {
+    border-radius: 0;
+    -webkit-appearance: none;
+    height: 60px;
+    font-size: 30px;
+    text-align:center;
 }
