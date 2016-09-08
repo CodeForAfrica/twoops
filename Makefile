@@ -18,3 +18,5 @@ stream: user-refresh startstreaming
 heartbeat:
 	python worker/heartbeat.py
 
+test:
+	nosetests tests/

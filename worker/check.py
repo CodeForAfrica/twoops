@@ -28,10 +28,21 @@ def chunkify(list_, size):
         return resp
 
         
+
+def loop(switch, twitter_clients):
+    '''
+    return the next index given the current and the list of API objects
+
+    switch:           <int>  -  the current index
+    twitter_clients:  <list> -  the list of api objects
+    '''
+    return switch + 1 if switch < len(twitter_clients)-1 else 0
+
+
 def main():
     """
     """
-    twitter_client = get_api()
+    twitter_clients = get_api(multi=True)
     redis_client = get_redis()
     entries = redis_client.keys("%s*" % PREFIX['new'])
 
@@ -43,13 +54,15 @@ def main():
     for chunk in chunks:
         # run chunk; then check rate limit
         delete_count = 0
+        switch = 0
         for entry in chunk:
+            twitter_client = twitter_clients[switch]
             saved_status = eval(redis_client.get(entry))
             status_id = entry.replace(PREFIX['new'], '')
 
             try: # check if it's still on twitter
                 status = twitter_client.get_status(status_id)
-                print "%s check" % entry
+                print "%s check | %s" % (entry, switch)
             except tweepy.error.TweepError, err:
                 deleted = redis_client.delete(entry)
                 print "ER: %s -- %s -- %s" % (entry, err, deleted)
@@ -63,6 +76,9 @@ def main():
                     print "Unexpected response for %s -- %s" % (entry, err)
             except Exception, other_error:
                 print "Unexpected response for %s -- %s" % (entry, other_error)
+            finally:
+                #switch = switch + 1 if switch < len(twitter_clients)-1 else 0
+                loop(switch, twitter_clients)
 
 
         if len(chunks) > 1:
