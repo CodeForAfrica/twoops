@@ -53,21 +53,6 @@ def epoch_to_date(time_in_epoch):
     return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time_in_epoch))
 
 
-def check_rate_limits(endpoint="/statuses/show/:id"):
-    '''
-    '''
-    try:
-        tw = get_api()
-        resp = tw.rate_limit_status()
-        limits = resp['resources']['statuses'][endpoint]
-        seconds_to_reset = limits['reset'] - time.time()
-        print "{remaining} out of {limit} | Resetting in %d seconds".format(**limits) % int(seconds_to_reset)
-        limits['seconds_to_reset'] = seconds_to_reset
-        return limits
-
-    except Exception, err:
-        print "ERROR: Cannot get rate limits - %s" % str(err)
-
 
 def get_users(raw=False):
     redis_client = get_redis()
