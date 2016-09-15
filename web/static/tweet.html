@@ -3,27 +3,47 @@
 
 {% block content %}
 
-<p> {{ payload }} </p>
+<!--<p> {{ payload }} </p>-->
 
 <div class="container">
-    <div class="tweet-card" style="height:auto;margin-top:15px;padding:0px 20px;">
-        <div class="row wrapper" style="">
-            <div class="col-md-1" style="height:100%;padding-top: 50px;">
-                <a class="media-left" href="https://twitter.com/{{ payload['username'] }}" style="" target="_blank">
-                    <img class="img-circle" src="{{ payload.get('avatar') + '_normal' }}" alt="{{ payload['username'] }}">
+    <div class="tweet-card" style="height:auto;margin-top:15px;padding:0px 20px;margin-bottom:15px;">
+        <div class="row wrapper">
+            <div class="col-md-12" style="padding: 20px;">
+                <div class="tweet-row" style="height:auto;">
+                    <a class="media-left" href="https://twitter.com/{{ payload['username'] }}" style="" target="_blank">
+                    <img class="img-circle" src="{{ payload.get('avatar') }}" alt="{{ payload['username'] }}" height="100px;">
                 </a>
-            </div>
-            <div class="col-md-11" style="padding: 20px;">
-                <span class="media-heading"><a href="https://twitter.com/{{ payload['username'] }}" target="_blank">@{{ payload['username'] }}</a></span> deleted this tweet:
+                </div>
                 <div class="blockquote">
                     <a href="/tweet/{{ payload['request_id'] }}"><p class="m-b-0">{{ payload['message'].decode('utf-8') }}</p> </a>
                 </div>
-                <hr>
-                <span class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ payload['created_at'] }}</span>
-                &nbsp;.&nbsp;
+
+                <div class="tweet-row underline"><a href="https://twitter.com/{{ payload['username'] }}" target="_blank">@{{ payload['username'] }}</a></div>
+
+                <div class="tweet-row">
+                    <i class="fa fa-map-marker"></i> Location: Nairobi
+                </div>
+                <div class="tweet-row">
+                    <i class="fa fa-retweet"></i> Retweets: 1,234
+                </div>
+                <div class="tweet-row">
+                    <i class="fa fa-mail-reply"></i> In response to: @abc Hey you. bla bla bla
+                </div>
+                <div class="tweet-row">
+                    <i class="fa fa-users"></i> Followers: 3.4M
+                </div>
+                 <div class="tweet-row"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ payload['created_at'] }}</div>
+
                 {% if payload.get('source') %}
-                <span class="text-muted">via {{ payload.get('source') }}</span>
+                <div class="tweet-row">via {{ payload.get('source') }}</div>
                 {% endif %}
+
+                <div class="tweet-row" style="height:auto;">
+                    <img class="img-circle" src="/assets/img/sample.png" height="200px">
+                    <img class="img-circle" src="/assets/img/sample.png" height="200px">
+                    <img class="img-circle" src="/assets/img/sample.png" height="200px">
+                </div>
+
                 <span class="links">
                     <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=twoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ payload['username'] }}">Reply to @{{ payload['username'] }}</a>
                     &nbsp;.&nbsp;

@@ -1,5 +1,5 @@
 body {
-    background: #f1f1f1;
+    background: #fff;
     font-family: 'Raleway', sans-serif;
     font-family: 'Open Sans', sans-serif;
 }
@@ -109,6 +109,7 @@ body {
     background: #cd0033;
     height: 30px;
     width: 30px;
+    margin-right:6px;
     /**bborder-radius: 30px;
     ackground-color: #CF000F;**/
     line-height: 30px;
@@ -134,7 +135,7 @@ body {
 .navbar-brand {color:#fff;}
 
 
-.bottom {background:#0D68A8;color:#fff;font-size:19px;margin:0px;font-family:inherit;}
+.bottom {background:#0D68A8;color:#fff;font-size:16px;margin:0px;font-family:inherit;}
 .bottom .wrap{padding:52px 0 62px}
 .bottom .inner{padding-right:10%}
 .bottom .two-thirds{padding-top:30px}
@@ -239,4 +240,28 @@ ul {
     height: 60px;
     font-size: 30px;
     text-align:center;
+}
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+.page {
+  min-height: 100%;
+  margin-bottom: -242px;
+}
+.page:after {
+  content: "";
+  display: block;
+}
+.bottom, .page:after {
+  height: 242px;
+}
+.tweet-row {
+    height:50px;
+    line-height:50px;
+}
+.underline {
+    border-bottom:2px solid #0D68A8;
 }
