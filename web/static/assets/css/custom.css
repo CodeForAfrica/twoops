@@ -241,3 +241,27 @@ ul {
     font-size: 30px;
     text-align:center;
 }
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+.page {
+  min-height: 100%;
+  margin-bottom: -242px;
+}
+.page:after {
+  content: "";
+  display: block;
+}
+.bottom, .page:after {
+  height: 242px;
+}
+.tweet-row {
+    height:50px;
+    line-height:50px;
+}
+.underline {
+    border-bottom:2px solid #0D68A8;
+}
