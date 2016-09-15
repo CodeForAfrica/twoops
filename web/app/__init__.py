@@ -25,7 +25,7 @@ def get_redis():
 
 
 @app.route('/')
-def counties():
+def home():
     '''
     index.html
     '''
@@ -56,6 +56,7 @@ def counties():
             pages=chunks,
             pagecount=len(chunks),
             landing=True,
+            pagesize=app.config["PAGESIZE"]
             )
 
 
@@ -90,12 +91,17 @@ def about():
     '''
     return render_template('about.html', about=True)
 
-@app.route('/tweet')
-def tweet():
+@app.route('/tweet/<tweet_id>')
+def tweet(tweet_id):
     '''
     tweet.html
     '''
-    return render_template('tweet.html', tweet=True)
+    redis_client = get_redis()
+    store_key = app.config['PREFIX']['deleted'] + str(tweet_id)
+    payload = redis_client.get(store_key)
+    payload = eval(payload) if payload else {}
+    print "RETURNED %s" % payload
+    return render_template('tweet.html', payload=payload)
 
 @app.route('/stories')
 def stories():

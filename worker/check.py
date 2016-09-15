@@ -71,7 +71,7 @@ def main():
 
     duration = datetime.datetime.now() - start_time
     now = time.asctime() + '|' + str(delete_count)
-    print "Last update: %s | Last run delete count: %s | Duration: %s seconds" % (now, delete_count, duration.seconds)
+    print "Last updated: %s | Latest delete count: %s | Duration: %s seconds" % (now, delete_count, duration.seconds)
     redis_client.set(TIME_KEY, now)
 
 if __name__ == '__main__':
