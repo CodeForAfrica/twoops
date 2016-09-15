@@ -18,6 +18,8 @@ Usage:
 import sys, time
 from pylitwoops.streaming import listener, config
 from pylitwoops.worker.check import chunkify
+from pylitwoops.monitor import health_check
+from pylitwoops.streaming import config
 
 
 def new_list(list_name, mode='private'):
@@ -81,6 +83,7 @@ def refresh(list_id):
         print r.set(user_key, member._json)
     print "Saved %s members from list %s" % (len(members), list_id)
     r.save()
+    health_check(config.HEALTH_CHECK_IDS["USER_REFRESH"])
 
 
 def _import(from_list_id, to_list_id):
