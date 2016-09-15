@@ -101,7 +101,7 @@ def tweet(tweet_id):
     payload = redis_client.get(store_key)
     payload = eval(payload) if payload else {}
     print "RETURNED %s" % payload
-    return render_template('tweet.html', payload=payload)
+    return render_template('tweet.html', payload=payload, tweet_page=True)
 
 @app.route('/stories')
 def stories():

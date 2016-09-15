@@ -126,15 +126,15 @@
         </div>
     </div>
     {% endif %}
-    {% if tweet_page %}
-    <div class="jumbotron home-jumbotron" style="height:5px;"></div>
+    {% if tweet_page or stories or about %}
+    <div class="jumbotron home-jumbotron" style="height:5px;padding:0px !important;"></div>
     {% endif %}
 
     {% block content %}
     {% endblock %}
 
 
-    <footer class="bottom">
+    <footer class="bottom" {% if tweet_page or stories or about %}style="bottom:0px;position:absolute;width:100%;"{% endif %}>
 		<div class="wrap container">
 			<div class="info clearfix">
 				<div class="col-md-6">
