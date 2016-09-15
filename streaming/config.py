@@ -60,4 +60,5 @@ PAGESIZE = 6 # no. of tweets per page
 
 HEALTH_CHECK_IDS = dict(
         HEARTBEAT=os.getenv("HEALTHCHECK_ID_HEARTBEAT"),
+        DELETECHECK=os.getenv("HEALTHCHECK_ID_DELETECHECK")
         )

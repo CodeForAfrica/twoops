@@ -6,4 +6,5 @@ def health_check(_id):
     """
     https://hchk.io/{uuid}
     """
-    requests.get("https://hchk.io/%s" % _id)
+    resp = requests.get("https://hchk.io/%s" % _id)
+    print "HEALTH - %s - %s" % (_id, resp.status_code)
