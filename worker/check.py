@@ -3,6 +3,8 @@ check if tweet has been deleted
 """
 import requests
 import datetime, time, math
+from pylitwoops.streaming import config
+from pylitwoops.monitor import health_check
 from pylitwoops.streaming.listener import (
         get_redis, tweepy, PREFIX, TIME_KEY)
 
@@ -71,8 +73,9 @@ def main():
 
     duration = datetime.datetime.now() - start_time
     now = time.asctime() + '|' + str(delete_count)
-    print "Last update: %s | Last run delete count: %s | Duration: %s seconds" % (now, delete_count, duration.seconds)
+    print "Last updated: %s | Latest delete count: %s | Duration: %s seconds" % (now, delete_count, duration.seconds)
     redis_client.set(TIME_KEY, now)
+    health_check(config.HEALTH_CHECK_IDS["DELETECHECK"])
 
 if __name__ == '__main__':
     main()

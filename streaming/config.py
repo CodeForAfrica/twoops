@@ -57,3 +57,10 @@ DEFAULT_IMAGE = "http://abs.twimg.com/sticky/default_profile_images/default_prof
 CACHE_TTL = 3600 # in seconds
 
 PAGESIZE = 6 # no. of tweets per page
+
+HEALTH_CHECK_IDS = dict(
+        HEARTBEAT=os.getenv("HEALTHCHECK_ID_HEARTBEAT"),
+        DELETECHECK=os.getenv("HEALTHCHECK_ID_DELETECHECK"),
+        USER_REFRESH=os.getenv("HEALTHCHECK_ID_USERREFRESH"),
+        HEARTBEAT_ON_RECEIVE=os.getenv("HEALTHCHECK_ID_HEARTBEAT_ON_RECEIVE")
+        )

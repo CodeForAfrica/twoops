@@ -5,6 +5,8 @@ import time
 import redis
 import tweepy
 import logging
+from pylitwoops.monitor import health_check
+from pylitwoops.streaming import config
 from pylitwoops.streaming.config import (
         TW_AUTH_CREDENTIALS, SENDER_ID, REDIS, PREFIX, TIME_KEY,
         HEARTBEAT_ACCOUNT, PRINCIPLE_TW_HANDLE)
@@ -97,6 +99,9 @@ class Listener(tweepy.StreamListener):
             if prefixed_user_id in filter_:
                 logging.info('{request_id} | {username} | {message} - {saved}'.format(
                         **payload))
+
+            if status.user.id_str == HEARTBEAT_ACCOUNT:
+                health_check(config.HEALTH_CHECK_IDS["HEARTBEAT_ON_RECEIVE"])
 
         except Exception, err:
             logging.error('on_status -- {}'.format(str(err)))

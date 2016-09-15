@@ -6,7 +6,7 @@
     <div class="container">
         <div class="media-list">
             <div class="row">
-                <strong class="pull-right tweet-count">2,300 deleted tweets</strong>
+                <strong class="pull-right tweet-count">{{ (pagecount * pagesize)-1 }} deleted tweets</strong>
             </div>
             {% for entry in pages[page] %}
             <div class="tweet-card" style="height:auto;margin-top:15px;padding:0px 20px;">
@@ -19,7 +19,7 @@
                     <div class="col-md-11" style="padding: 20px;">
                         <span class="media-heading"><a href="https://twitter.com/{{ entry['username'] }}" target="_blank">@{{ entry['username'] }}</a></span> deleted this tweet:
                         <div class="blockquote">
-                            <p class="m-b-0">{{ entry['message'].decode('utf-8') }}</p>
+                            <a href="/tweet/{{ entry['request_id'] }}"><p class="m-b-0">{{ entry['message'].decode('utf-8') }}</p> </a>
                         </div>
                         <hr>
                         <span class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ entry['created_at'] }}</span>
