@@ -15,7 +15,7 @@ Usage:
     python scripts/lists.py refresh <list-id>
 
 """
-import sys, time
+import sys, time, csv
 from pylitwoops.streaming import listener, config
 from pylitwoops.worker.check import chunkify
 from pylitwoops.monitor import health_check
@@ -57,6 +57,19 @@ def list_members(list_id):
         print "%s :: @%s" % (member.id, member.screen_name)
     print "%s members" % len(members)
     return members
+
+
+def index_users(list_id, filename="users.csv"):
+    refresh(list_id)
+    members = list_members(list_id)
+    with open(filename, 'w') as csvfile:
+        userwriter = csv.writer(csvfile)
+        userwriter.writerow( [ "id", "screenname", "name" ] )
+        for member in members:
+            userwriter.writerow( [ member.id, member.screen_name.encode('utf-8'), member.name.encode('utf-8') ] )
+    return filename
+
+
 
 
 def list_members_by_name(owner_name, list_slug):
@@ -115,7 +128,7 @@ def _import(from_list_id, to_list_id):
 
 
 if __name__ == "__main__":
-    actions = ['create', 'add', 'list_by_id', 'list_by_name', 'refresh', 'import']
+    actions = ['create', 'add', 'list_by_id', 'list_by_name', 'refresh', 'import', 'index_users']
     action = sys.argv[1]
     if action not in actions:
         print "Unknown action"
@@ -144,3 +157,6 @@ if __name__ == "__main__":
         from_list_id = sys.argv[2]
         to_list_id = sys.argv[3]
         _import(from_list_id, to_list_id)
+    elif action == 'index_users':
+        list_id = sys.argv[2]
+        print index_users(list_id)
