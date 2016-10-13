@@ -64,3 +64,5 @@ HEALTH_CHECK_IDS = dict(
         USER_REFRESH=os.getenv("HEALTHCHECK_ID_USERREFRESH"),
         HEARTBEAT_ON_RECEIVE=os.getenv("HEALTHCHECK_ID_HEARTBEAT_ON_RECEIVE")
         )
+
+EXPORT_FILE = "/tmp/twoops-export.csv"
