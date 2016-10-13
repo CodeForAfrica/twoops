@@ -1,5 +1,8 @@
-## pylitwoops
-Python port of [politwoops](https://github.com/sunlightlabs/politwoops)
+## Twoops
+
+Real time tracking of public tweets deleted by public figures and organizations: Explore the tweets they would prefer you couldn't see.
+
+Inspired by [politwoops](https://github.com/sunlightlabs/politwoops)
 
 ## Components
 
