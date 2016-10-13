@@ -20,3 +20,6 @@ heartbeat:
 
 test:
 	nosetests tests/
+
+dump:
+	python scripts/dumpdata.py
