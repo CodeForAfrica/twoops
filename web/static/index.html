@@ -8,34 +8,36 @@
             <div class="row">
                 <strong class="pull-right tweet-count">{{ (pagecount * pagesize)-1 }} deleted tweets</strong>
             </div>
-            {% for entry in pages[page] %}
-            <div class="tweet-card" style="height:auto;margin-top:15px;padding:0px 20px;">
-                <div class="row wrapper" style="">
-                    <div class="col-md-1" style="height:100%;padding-top: 50px;">
-                        <a class="media-left" href="https://twitter.com/{{ entry['username'] }}" style="" target="_blank">
-                            <img class="img-circle" src="{{ entry.get('avatar') + '_normal' }}" alt="{{ entry['username'] }}">
-                        </a>
-                    </div>
-                    <div class="col-md-11" style="padding: 20px;">
-                        <span class="media-heading"><a href="https://twitter.com/{{ entry['username'] }}" target="_blank">@{{ entry['username'] }}</a></span> deleted this tweet:
-                        <div class="blockquote">
-                            <a href="/tweet/{{ entry['request_id'] }}"><p class="m-b-0">{{ entry['message'].decode('utf-8') }}</p> </a>
+            <div id="tweets">
+                {% for entry in pages[page] %}
+                <div class="tweet-card" style="height:auto;margin-top:15px;padding:0px 20px;">
+                    <div class="row wrapper" style="">
+                        <div class="col-md-1" style="height:100%;padding-top: 50px;">
+                            <a class="media-left" href="https://twitter.com/{{ entry['username'] }}" style="" target="_blank">
+                                <img class="img-circle" src="{{ entry.get('avatar') + '_normal' }}" alt="{{ entry['username'] }}">
+                            </a>
                         </div>
-                        <hr>
-                        <span class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ entry['created_at'] }}</span>
-                        &nbsp;.&nbsp;
-                        {% if entry.get('source') %}
-                        <span class="text-muted">via {{ entry.get('source') }}</span>
-                        {% endif %}
-                        <span class="links">
-                            <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=twoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }}">Reply to @{{ entry['username'] }}</a>
+                        <div class="col-md-11" style="padding: 20px;">
+                            <span class="media-heading"><a href="https://twitter.com/{{ entry['username'] }}" target="_blank">@{{ entry['username'] }}</a></span> deleted this tweet:
+                            <div class="blockquote">
+                                <a href="/tweet/{{ entry['request_id'] }}"><p class="m-b-0">{{ entry['message'].decode('utf-8') }}</p> </a>
+                            </div>
+                            <hr>
+                            <span class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ entry['created_at'] }}</span>
                             &nbsp;.&nbsp;
-                            <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=twoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} deleted this tweet: {{ entry['message'].decode('utf-8') }}" >Share on Twitter</a>
-                        </span>
+                            {% if entry.get('source') %}
+                            <span class="text-muted">via {{ entry.get('source') }}</span>
+                            {% endif %}
+                            <span class="links">
+                                <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=twoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }}">Reply to @{{ entry['username'] }}</a>
+                                &nbsp;.&nbsp;
+                                <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=twoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} deleted this tweet: {{ entry['message'].decode('utf-8') }}" >Share on Twitter</a>
+                            </span>
+                        </div>
                     </div>
                 </div>
+            {% endfor %}
             </div>
-        {% endfor %}
         </div>
 
         <br clear="all">
