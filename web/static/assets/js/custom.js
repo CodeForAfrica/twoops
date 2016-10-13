@@ -42,7 +42,6 @@ function present_tweet_view(data) {
     markup += '<div class="row wrapper" style="">';
     markup += '<div class="col-md-1" style="height:100%;padding-top: 50px;">';
     markup += '<a class="media-left" href="https://twitter.com/' + username + '" style="" target="_blank">';
-    markup += '<img class="img-circle" src="{{ entry.get("avatar") + _normal }}" alt="' + username + '">';
     markup += '</a>';
     markup += '</div>';
     markup += '<div class="col-md-11" style="padding: 20px;">';
