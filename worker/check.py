@@ -1,12 +1,14 @@
 """
 check if tweet has been deleted
 """
+import boto3
 import requests
 import datetime, time, math
 from pylitwoops.streaming import config
 from pylitwoops.monitor import health_check
 from pylitwoops.streaming.listener import (
         get_redis, tweepy, PREFIX, TIME_KEY)
+from pylitwoops.data.tweet_template import template
 
 
 def chunkify(list_, size):
@@ -29,6 +31,13 @@ def chunkify(list_, size):
             limit += size
         return resp
 
+
+def index_for_search(status_payload):
+    """
+    """
+    status_payload_json = template.format(**status_payload)
+    cloudsearch_client = boto3.client("cloudsearchdomain", **config.CLOUDSEARCH)
+    cloudsearch_client.upload_documents(documents=status_payload_json, contentType='application/json')
         
 def main():
     """
@@ -62,6 +71,7 @@ def main():
                     store_key = PREFIX['deleted'] + str(status_id)
                     saved_status['saved'] = redis_client.set(store_key, saved_status)
                     print "DELETED!!!  --  {request_id}  --  {username}: {message} -- {saved}".format(**saved_status)
+                    index_for_search(saved_status)
                     delete_count += 1
                 else:
                     print "Unexpected response for %s -- %s: %s" % (entry, status.status_code, status.reason)
