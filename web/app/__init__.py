@@ -18,9 +18,12 @@ app = Flask(__name__,
 app.config.from_object(config_file)
 
 
-def get_redis():
+def get_redis(users_only=False):
     if not hasattr(g, 'redis'):
-        g.redis = _get_redis()
+        g.redis = _get_redis(db=app.config["redis_databases"]["tweets"])
+        g.redis_user = _get_redis(db=app.config["redis_databases"]["users"])
+    if user_only:
+        return g.redis_user
     return g.redis
 
 
@@ -110,11 +113,15 @@ def user(user_id):
     user.html
     '''
     redis_client = get_redis()
-    store_key = app.config['PREFIX']['deleted'] + str(user_id)
-    payload = redis_client.get(store_key)
-    payload = eval(payload) if payload else {}
-    print "RETURNED %s" % payload
-    return render_template('user.html', payload=payload, tweet_page=True)
+    redis_client_user = get_redis(users_only=True)
+    store_key = "user-" + str(user_id)
+    user_deleted_tweets = redis_client_user.lrange(store_key, 0, -1)
+    user_tweets = []
+    for tweet_id in user_deleted_tweets:
+        tweet_payload = eval(redis_client.get(tweet_id))
+        user_tweets.append(tweet_payload)
+    print "get user %s - %s" % (user_id, len(user_tweets))
+    return render_template('user.html', payload=user_tweets)
 
 
 @app.route('/stories')

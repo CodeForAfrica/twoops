@@ -50,7 +50,7 @@ REDIS = dict(
 PREFIX = dict(
         new='tw-',
         deleted='del-',
-        user='user-'
+        user='user-',
         )
 
 TIME_KEY = "updated-at"
