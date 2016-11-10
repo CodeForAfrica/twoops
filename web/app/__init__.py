@@ -115,14 +115,14 @@ def user(user_id):
     redis_client = get_redis()
     redis_client_user = get_redis(users_only=True)
     store_key = "user-" + str(user_id)
+    user_profile = eval(redis_client.get(store_key))
     user_deleted_tweets = redis_client_user.lrange(store_key, 0, -1)
     user_tweets = []
     for tweet_id in user_deleted_tweets:
         tweet_payload = eval(redis_client.get(tweet_id))
-        tweet_payload["bio"] = eval(redis_client.get(store_key))["description"]
         user_tweets.append(tweet_payload)
     print "get user %s - %s" % (user_id, len(user_tweets))
-    return render_template('user.html', payload=user_tweets, user=user_tweets[0])
+    return render_template('user.html', payload=user_tweets, user=user_profile)
 
 
 @app.route('/stories')
