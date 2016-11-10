@@ -5,13 +5,18 @@
 <div class="container">
     <!--/.row -->
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-7" style="padding-left: 0px;">
             <p>Want us to track a public figure or organization?</p>
             <div class="input-group pull-left" style="width:70%;">
                 <span class="input-group-addon" id="basic-addon2">@</span>
                 <input type="text" class="form-control" id="recommendation" value="Enter a Twitter handle" aria-describedby="basic-addon2">
             </div>
-            <button class="btn pull-left" style="margin-left:10px;">Recommend</button>
+            <button class="btn pull-left" id="recommend-button" style="margin-left:10px;">Recommend</button>
+            <br>
+            <div class="pull-left response-messages">
+                <span class="success" style="color:green;">Saved <i class="fa fa-check fa-2x" aria-hidden="true"></i></span>
+                <span class="error" style="color:#cd0033;">Error <i class="fa fa-times fa-2x" aria-hidden="true"></i></span>
+            </div>
         </div>
     </div>
     <br clear="all">

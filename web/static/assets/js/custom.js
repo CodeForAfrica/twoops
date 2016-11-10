@@ -5,7 +5,10 @@ $('#user-search').focus(function() {
     if ($('#user-search').val().toLowerCase() == 'search') $('#user-search').val('')
 });
 $('#recommendation').focus(function() {
-    if ($('#recommendation').val().toLowerCase() == 'twitter handle') $('#recommendation').val('')
+    if ($('#recommendation').val().toLowerCase() == 'enter a twitter handle') $('#recommendation').val('')
+});
+$('#email').focus(function() {
+    if ($('#email').val().toLowerCase() == 'email address') $('#email').val('')
 });
 
 $('#home-search').keypress(function (e) {
@@ -20,6 +23,14 @@ $('#user-search').keypress(function (e) {
     var key = e.which;
     if(key == 13) {
         search_users()
+        return false;
+    }
+});
+
+$('#recommendation').keypress(function (e) {
+    var key = e.which;
+    if(key == 13) {
+        recommend_user($('#recommendation').val())
         return false;
     }
 });
@@ -84,4 +95,50 @@ function present_tweet_view(data) {
     markup += '</div>';
     markup += '</div>';
     return markup
+}
+
+$('#recommend-button').click(function() {
+    recommend_user($('#recommendation').val())
+})
+
+$('#alert-button').click(function() {
+    subscribe($('#email').val())
+})
+
+function recommend_user(handle) {
+    if (handle != '') {
+        url = '/recommend?handle=' + handle
+        $.ajax({
+            url: url,
+            success: function(data) {
+                if (data.success) {
+                    $('.success').css('display', 'block')
+                    $('.error').css('display', 'none')
+                } else {
+                    $('.success').css('display', 'none')
+                    $('.error').css('display', 'block')
+                }
+            }
+        });
+    }
+}
+
+function subscribe(email) {
+    if (email != '') {
+        url = '/subscribe-to-alerts'
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: $('#alert-form').serialize(),
+            success: function(data) {
+                if (data.success) {
+                    $('.success').css('display', 'block')
+                    $('.error').css('display', 'none')
+                } else {
+                    $('.success').css('display', 'none')
+                    $('.error').css('display', 'block')
+                }
+            }
+        });
+    }
 }

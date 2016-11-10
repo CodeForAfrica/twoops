@@ -132,6 +132,30 @@ def stories():
     '''
     return render_template('stories.html', stories=True)
 
+@app.route('/recommend')
+def recommend():
+    '''
+    Recieves a handle to track
+    '''
+    handle = request.args.get('handle', None)
+    if handle:
+        pass
+        #Write code here that saves the handle
+    return jsonify({'success': True})
+
+@app.route('/subscribe-to-alerts')
+def subscribe_to_alerts():
+    '''
+    Recieves a email to send alerts to
+    '''
+    email = request.args.post('email', None)
+    user_id = request.args.post('user_id', None)
+    if email:
+        pass
+        #Write code here that saves the email and is alerted when tweets are deleted
+    return jsonify({'success': False})
+
+
 manager = Manager(app)
 
 if __name__ == "__main__":
