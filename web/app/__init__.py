@@ -7,6 +7,7 @@ from flask import (Flask, g, request, session, redirect,
 from flask_script import Manager
 from pylitwoops.streaming import config as config_file
 from pylitwoops.streaming.listener import get_api
+from pylitwoops.streaming.listener import get_redis as _get_redis
 from pylitwoops.worker.check import chunkify
 from flask_paginate import Pagination
 import math
@@ -19,7 +20,7 @@ app.config.from_object(config_file)
 
 def get_redis():
     if not hasattr(g, 'redis'):
-        g.redis = redis.StrictRedis(**app.config['REDIS'])
+        g.redis = _get_redis()
     return g.redis
 
 
