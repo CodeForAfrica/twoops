@@ -44,6 +44,7 @@ def main():
     """
     start_time = datetime.datetime.now()
     redis_client = get_redis()
+    redis_client_user = get_redis(config.redis_databases["users"])
     entries = redis_client.keys("%s*" % PREFIX['new'])
 
     chunk_size = 160  # because twitter api rate limit is 180
@@ -71,7 +72,14 @@ def main():
                     store_key = PREFIX['deleted'] + str(status_id)
                     saved_status['saved'] = redis_client.set(store_key, saved_status)
                     print "DELETED!!!  --  {request_id}  --  {username}: {message} -- {saved}".format(**saved_status)
-                    index_for_search(saved_status)
+
+                    # append to user deleted list
+                    sender_key = "user-" + str(saved_status["sender_id"])
+                    size = redis_client_user.rpush(sender_key, store_key)
+                    print "rpush'ed %s - new size: %s" % (sender_key, size)
+
+                    # index for search
+                    # index_for_search(saved_status)
                     delete_count += 1
                 else:
                     print "Unexpected response for %s -- %s: %s" % (entry, status.status_code, status.reason)

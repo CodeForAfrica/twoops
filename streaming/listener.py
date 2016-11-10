@@ -41,10 +41,11 @@ def get_api(auth_only=False, multi=False):
         raise err
 
 
-def get_redis():
+def get_redis(db=5):
     """
     return <redis.StrictRedis> instance
     """
+    REDIS["db"] = db
     return redis.StrictRedis(**REDIS)
 
 
