@@ -155,7 +155,7 @@ def subscribe_to_alerts():
         redis_client = get_redis()
         key = app.config["PREFIX"]["alerts"] + str(user_id)
         redis_client.rpush(key, email)
-    return jsonify({'success': False})
+    return jsonify({'success': True})
 
 
 manager = Manager(app)

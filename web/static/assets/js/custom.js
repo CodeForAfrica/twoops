@@ -125,10 +125,11 @@ function recommend_user(handle) {
 
 function subscribe(email) {
     if (email != '') {
-        url = '/subscribe-to-alerts'
+        user_id = $('#user_id').val()
+        url = '/subscribe-to-alerts?email=' + email + '&user_id=' + user_id
         $.ajax({
             url: url,
-            method: 'POST',
+            method: 'GET',
             data: $('#alert-form').serialize(),
             success: function(data) {
                 if (data.success) {
