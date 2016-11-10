@@ -20,9 +20,9 @@ app.config.from_object(config_file)
 
 def get_redis(users_only=False):
     if not hasattr(g, 'redis'):
-        g.redis = _get_redis(db=app.config["redis_databases"]["tweets"])
-        g.redis_user = _get_redis(db=app.config["redis_databases"]["users"])
-    if user_only:
+        g.redis = _get_redis(5)
+        g.redis_user = _get_redis(1)
+    if users_only:
         return g.redis_user
     return g.redis
 
