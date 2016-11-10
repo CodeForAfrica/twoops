@@ -103,6 +103,19 @@ def tweet(tweet_id):
     print "RETURNED %s" % payload
     return render_template('tweet.html', payload=payload, tweet_page=True)
 
+@app.route('/user/<user_id>')
+def user(user_id):
+    '''
+    user.html
+    '''
+    redis_client = get_redis()
+    store_key = app.config['PREFIX']['deleted'] + str(user_id)
+    payload = redis_client.get(store_key)
+    payload = eval(payload) if payload else {}
+    print "RETURNED %s" % payload
+    return render_template('user.html', payload=payload, tweet_page=True)
+
+
 @app.route('/stories')
 def stories():
     '''

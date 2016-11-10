@@ -1,7 +1,7 @@
 body {
     background: #fff;
-    font-family: 'Raleway', sans-serif;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    margin-right: 0;
 }
 .social-btns i {
     padding-right:10px;
@@ -16,22 +16,24 @@ body {
 .nav>li>a {
     padding: 10px 15px 10px 0px;
 }
-.nav>li { height:70px;margin-right:10px; }
+.nav>li { height:70px;margin-right:10px;padding: 30px 0px; }
 .nav>li>a:hover {
     border-bottom:2px solid #000;
     background:none;
 }
-
-.topbrand a {
+.navbar-brand {
+    padding:0px;
+}
+.navbar-brand a {
     text-decoration:none;
     color: #000;
 }
-.topbrand h1 {
+.navbar-brand h1 {
     padding:7px;
     border: 2px solid #000;
-    width:160px;
+    width:170px;
 }
-.topbrand a:hover {
+.navbar-brand a:hover {
     text-decoration:none;
     color: #000;
 }
@@ -135,22 +137,23 @@ body {
 .navbar-brand {color:#fff;}
 
 
-.bottom {background:#0D68A8;color:#fff;font-size:16px;margin:0px;font-family:inherit;}
+.bottom {background:#0D68A8;color:#fff;font-size:15px;margin:0px;font-family:inherit;}
 .bottom .wrap{padding:52px 0 62px}
 .bottom .inner{padding-right:10%}
 .bottom .two-thirds{padding-top:30px}
 .bottom h3{color:#fff;font-size:20px;font-weight:600;margin-bottom:25px}
 .bottom a{color:#fff;text-decoration:none;-moz-transition:all .3s ease;-o-transition:all .3s ease;-webkit-transition:all .3s ease;transition:all .3s ease}
-.bottom a:hover{border-bottom:1px solid #fff;}
+.bottom a:hover{text-decoration:underline;}
 .bottom ul{padding-top:10px;list-style-type:square}
 .bottom small{font-weight:100;font-size:85%}
-.bottom li a{font-weight:100;font-size:85%}
+.bottom li a{font-weight:100;}
 .bottom .footer-logo{display:inline-block;height:85px}
 .bottom .footer-logo:hover{border-bottom:none;-moz-transform:scale(0.975);-ms-transform:scale(0.975);-webkit-transform:scale(0.975);transform:scale(0.975)}
 .bottom .footer-logo.cfk{width:182px;background:url('../img/cfkenya_blue.png') no-repeat}
 .bottom .footer-logo.hivos{margin-left:50px;width:140px;background:url('../img/hivos.png') no-repeat}
 .bottom .third{float:left;width:33%}
 .bottom .half{float:left;width:49%}
+.col-md-6 {padding-left:0px;}
 
 @media (max-width: 1240px){.wrap{width:94%}
 .bottom .third{float:left;width:33%}
@@ -249,14 +252,14 @@ html, body {
 }
 .page {
   min-height: 100%;
-  margin-bottom: -242px;
+  margin-bottom: -272px;
 }
 .page:after {
   content: "";
   display: block;
 }
 .bottom, .page:after {
-  height: 242px;
+  height: 272px;
 }
 .tweet-row {
     height:50px;
