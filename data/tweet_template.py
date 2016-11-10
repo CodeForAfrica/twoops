@@ -1,11 +1,11 @@
 template = """
 [
  {"type": "add",
-  "id":   "{request_id}",
+  "id":   "%s",
   "fields": {
-      "user": "{username}",
-      "id": "{request_id}",
-      "text": "{message}"
+      "user": "%s",
+      "id": "%s",
+      "text": "%s"
   }
  }
 ]

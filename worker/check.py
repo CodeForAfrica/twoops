@@ -35,9 +35,14 @@ def chunkify(list_, size):
 def index_for_search(status_payload):
     """
     """
-    status_payload_json = template.format(**status_payload)
-    cloudsearch_client = boto3.client("cloudsearchdomain", **config.CLOUDSEARCH)
-    cloudsearch_client.upload_documents(documents=status_payload_json, contentType='application/json')
+    try:
+        status_payload_json = template % (status_payload["request_id"],
+                status_payload["username"], status_payload["request_id"], status_payload["message"])
+        cloudsearch_client = boto3.client("cloudsearchdomain", **config.CLOUDSEARCH)
+        cloudsearch_client.upload_documents(documents=status_payload_json, contentType='application/json')
+    except Exception, err:
+        print "ERROR - index_for_search() - %s - %s" % (err, status_payload)
+
         
 def main():
     """
@@ -79,7 +84,7 @@ def main():
                     print "rpush'ed %s - new size: %s" % (sender_key, size)
 
                     # index for search
-                    # index_for_search(saved_status)
+                    index_for_search(saved_status)
                     delete_count += 1
                 else:
                     print "Unexpected response for %s -- %s: %s" % (entry, status.status_code, status.reason)
