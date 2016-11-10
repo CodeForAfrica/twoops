@@ -140,7 +140,7 @@ def recommend():
     handle = request.args.get('handle', None)
     if handle:
         redis_client = get_redis()
-        key = app.config.PREFIX["recommend"] + str(handle)
+        key = app.config["PREFIX"]["recommend"] + str(handle)
         redis_client.set(key, "https://twitter.com/%s" % handle)
     return jsonify({'success': True})
 
@@ -149,11 +149,11 @@ def subscribe_to_alerts():
     '''
     Recieves a email to send alerts to
     '''
-    email = request.args.post('email', None)
-    user_id = request.args.post('user_id', None)
+    email = request.args.get('email', None)
+    user_id = request.args.get('user_id', None)
     if email:
         redis_client = get_redis()
-        key = app.config.PREFIX["alerts"] + str(user_id)
+        key = app.config["PREFIX"]["alerts"] + str(user_id)
         redis_client.rpush(key, email)
     return jsonify({'success': False})
 
