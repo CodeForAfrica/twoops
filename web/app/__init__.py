@@ -119,6 +119,7 @@ def user(user_id):
     user_tweets = []
     for tweet_id in user_deleted_tweets:
         tweet_payload = eval(redis_client.get(tweet_id))
+        tweet_payload["bio"] = eval(redis_client.get(store_key))["description"]
         user_tweets.append(tweet_payload)
     print "get user %s - %s" % (user_id, len(user_tweets))
     return render_template('user.html', payload=user_tweets, user=user_tweets[0])
