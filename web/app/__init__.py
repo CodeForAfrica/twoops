@@ -121,7 +121,7 @@ def user(user_id):
         tweet_payload = eval(redis_client.get(tweet_id))
         user_tweets.append(tweet_payload)
     print "get user %s - %s" % (user_id, len(user_tweets))
-    return render_template('user.html', payload=user_tweets)
+    return render_template('user.html', payload=user_tweets, user=user_tweets[0])
 
 
 @app.route('/stories')

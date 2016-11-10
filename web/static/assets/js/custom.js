@@ -72,7 +72,7 @@ function present_tweet_view(data) {
     markup += '<a href="/tweet/' + id + '"><p class="m-b-0">' + text + '</p> </a>';
     markup += '</div>';
     markup += '<hr>';
-    markup += '<span class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> ' + time + '</span>';
+    markup += '<span class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> '  + '</span>';
     markup += '&nbsp;.&nbsp;';
         //markup += '<span class="text-muted">via {{ entry.get('source') }}</span>';
     markup += '<span class="links">';

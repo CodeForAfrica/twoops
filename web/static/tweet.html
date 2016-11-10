@@ -10,7 +10,7 @@
         <div class="row wrapper">
             <div class="col-md-12" style="padding: 20px;">
                 <div class="tweet-row" style="height:auto;">
-                    <a class="media-left" href="https://twitter.com/{{ payload['username'] }}" style="" target="_blank">
+                    <a class="media-left" href="/user/{{ payload['user_id'] }}" style="" target="_blank">
                     <img class="img-circle" src="{{ payload.get('avatar') }}" alt="{{ payload['username'] }}" height="100px;">
                 </a>
                 </div>
