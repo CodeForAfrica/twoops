@@ -2,6 +2,19 @@ body {
     background: #fff;
     font-family: 'Poppins', sans-serif;
     margin-right: 0;
+    font-size:15px;
+}
+input {
+    height: 50px !important;
+    font-size:30px;
+}
+button, .btn {
+    background-color:#fff;
+    border: 2px solid #000;
+    font-weight:bold;
+    height: 50px;
+    padding: 10px;
+    border-radius:0px;
 }
 .social-btns i {
     padding-right:10px;
@@ -39,7 +52,7 @@ body {
 }
 
 .user-card {
-    height:270px;
+    height:300px;
     color: #333;
     border-color: #ccc;
     padding:0px 10px 0px 0px;
@@ -53,10 +66,11 @@ body {
 
 .user-card .wrapper {
     background:#fff;
-    height:260px;
+    height:290px;
     border:1px solid #ccc;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    padding: 15px;
 }
 
 .tweet-card .wrapper {
@@ -210,6 +224,8 @@ ul {
     border: 2px solid #fff;
     color: #fff;
     height: 40px;
+    font-size:30px;
+    text-align:center;
 }
 .jumbotron .input-group-addon {
     background-color: #fff !important;
@@ -231,6 +247,7 @@ ul {
     text-transform: uppercase;
     font-weight: bold;
     border-radius: 0px;
+    height:50px;
 }
 .jumbotron select {
     border-radius:0 !important;
@@ -274,11 +291,4 @@ html, body {
 .story-card {
     padding:15px;
     text-align:center;
-}
-.story-card  button {
-    background-color:#fff;
-    border: 2px solid #000;
-    font-weight:bold;
-    height: 40px;
-    padding: 10px;
 }
