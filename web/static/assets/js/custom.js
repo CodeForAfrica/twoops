@@ -1,6 +1,9 @@
 $('#home-search').focus(function() {
     if ($('#home-search').val().toLowerCase() == 'search') $('#home-search').val('')
 });
+$('#user-search').focus(function() {
+    if ($('#user-search').val().toLowerCase() == 'search') $('#user-search').val('')
+});
 $('#recommendation').focus(function() {
     if ($('#recommendation').val().toLowerCase() == 'twitter handle') $('#recommendation').val('')
 });
@@ -13,9 +16,22 @@ $('#home-search').keypress(function (e) {
     }
 });
 
+$('#user-search').keypress(function (e) {
+    var key = e.which;
+    if(key == 13) {
+        search_users()
+        return false;
+    }
+});
+
 $('#basic-addon2').click(function() {
     search_tweets()
 });
+
+$('#basic-addon3').click(function() {
+    search_users()
+});
+
 
 function search_tweets() {
     q = $('#home-search').val()
@@ -34,10 +50,16 @@ function search_tweets() {
     });
 }
 
+function search_users() {
+
+}
+
 function present_tweet_view(data) {
     id = data.fields.id
     username = data.fields.user
     text = data.fields.text
+//    time = data.fields.created_at
+//    image = data.fields.image
     markup = ' <div class="tweet-card" style="height:auto;margin-top:15px;padding:0px 20px;">';
     markup += '<div class="row wrapper" style="">';
     markup += '<div class="col-md-1" style="height:100%;padding-top: 50px;">';
@@ -50,7 +72,7 @@ function present_tweet_view(data) {
     markup += '<a href="/tweet/' + id + '"><p class="m-b-0">' + text + '</p> </a>';
     markup += '</div>';
     markup += '<hr>';
-    markup += '<span class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ entry[created_at] }}</span>';
+    markup += '<span class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> ' + time + '</span>';
     markup += '&nbsp;.&nbsp;';
         //markup += '<span class="text-muted">via {{ entry.get('source') }}</span>';
     markup += '<span class="links">';
