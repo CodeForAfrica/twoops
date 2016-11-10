@@ -20,7 +20,7 @@ Requirements:
 * A Redis instance
 
 Installation:
-* Clone the source: `git clone https://github.com/andkamau/pylitwoops`
+* Clone the source: `git clone https://github.com/codeforafricalabs/pylitwoops`
 * Set up a new virtualenv: `virtualenv ~/pylitwoops`
 * Export env variables on `pylitwoops.env`
 * Install python dependencies:  `pip install -r requirements.txt`

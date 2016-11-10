@@ -35,10 +35,13 @@ SENDER_ID['pylitwoops'] = '1237372231'
 HEARTBEAT_ACCOUNT = "1237372231" # Twitter ID of the account sending heartbeats
 
 redis_host = os.getenv('REDIS_HOST', 'localhost:6379')
+redis_databases = dict(
+        tweets=5,
+        users=1
+        )
 REDIS = dict(
         host=redis_host.split(':')[0],
         port=redis_host.split(':')[1],
-        db='5',
         password=os.getenv('REDIS_PASSWORD', None),
         socket_timeout=2,
         socket_connect_timeout=2,
