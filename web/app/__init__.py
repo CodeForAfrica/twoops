@@ -70,6 +70,7 @@ def tracked_users():
     users.html
     '''
     redis_client = get_redis()
+    redis_client_user = get_redis(users_only=True)
     users = []
     page = request.args.get('page', type=int, default=0)
     per_page = 9
