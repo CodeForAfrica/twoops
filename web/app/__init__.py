@@ -139,11 +139,12 @@ def recommend():
     '''
     handle = request.args.get('handle', None)
     if handle:
-        pass
-        #Write code here that saves the handle
+        redis_client = get_redis()
+        key = app.config.PREFIX["recommend"] + str(handle)
+        redis_client.set(key, "https://twitter.com/%s" % handle)
     return jsonify({'success': True})
 
-@app.route('/subscribe-to-alerts')
+@app.route('/subscribe-to-alerts', methods=["GET", "POST"])
 def subscribe_to_alerts():
     '''
     Recieves a email to send alerts to
@@ -151,8 +152,9 @@ def subscribe_to_alerts():
     email = request.args.post('email', None)
     user_id = request.args.post('user_id', None)
     if email:
-        pass
-        #Write code here that saves the email and is alerted when tweets are deleted
+        redis_client = get_redis()
+        key = app.config.PREFIX["alerts"] + str(user_id)
+        redis_client.rpush(key, email)
     return jsonify({'success': False})
 
 

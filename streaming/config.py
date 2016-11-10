@@ -51,6 +51,8 @@ PREFIX = dict(
         new='tw-',
         deleted='del-',
         user='user-',
+        recommend="rec-",
+        alerts="alert-"
         )
 
 TIME_KEY = "updated-at"
