@@ -76,13 +76,17 @@ def tracked_users():
     keys = redis_client.keys("%s*" % app.config['PREFIX']['user'])
     for user in keys[page * per_page: page * per_page + per_page]:
         user_payload = eval(redis_client.get(user))
+        
+        lenkey = "user-" + str(user_payload["id"])
+        user_delete_count = redis_client_user.llen(lenkey)
 
         if not str(user_payload['id']) == app.config['HEARTBEAT_ACCOUNT']:
             users.append(dict(
                 screen_name=user_payload['screen_name'],
                 avatar=user_payload['profile_image_url'],
                 user_id=user_payload['id'],
-                bio=user_payload['description']
+                bio=user_payload['description'],
+                delete_count=user_delete_count
                 ))
     pagination = Pagination(page=page, total=len(users), search='', record_name='users')
     pagecount = int(math.ceil( float(len(keys))/per_page))
