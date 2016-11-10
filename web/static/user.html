@@ -2,12 +2,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <div class="jumbotron">
     <div class="container">
-        <a class="media-left pull-left" href="https://twitter.com/{{ user['username'] }}" style="" target="_blank">
-            <img class="img-circle" src="{{ user.get('avatar') + '_normal' }}" alt="{{ user['username'] }}">
+        <a href="https://twitter.com/{{ user['screen_name'] }}" style="color:#fff;"  style="" target="_blank">
+            <img class="img-circle pull-left" src="{{ user.get('profile_image_url')}}" alt="{{ user['screen_name'] }}"/>
+            <div class="pull-left" style="margin-left:20px;">
+                <h2>@{{ user['screen_name'] }}</h2>
+                <p>{{ user['description'] }}</p>
+            </div>
         </a>
-        <a href="https://twitter.com/{{ user['username'] }}" style="color:#fff;"><h2 class="pull-left">@{{ user['username'] }}</h2></a>
     </div>
 </div>
 <div class="container">
@@ -35,7 +39,10 @@
                     </div>
                 </div>
             </div>
-        {% endfor %}
+            {% endfor %}
+            {% if not payload%}
+            No twoops!
+            {% endif %}
         </div>
     </div>
 </div>
