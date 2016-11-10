@@ -20,7 +20,7 @@
         {% for user in users %}
         <div class="col-md-4 col-sm-6 col-xs-12 user-card">
             <div class="wrapper">
-                <a target="_blank" href="/user/{{ user['user_id'] }}">
+                <a href="/user/{{ user['user_id'] }}">
                 <div class="top row">
                     <div class="col-md-6">
                         <img class="img-circle" src="{{ user.get('avatar') + '_normal' }}" alt="{{ user['username'] }}">

@@ -151,7 +151,7 @@ button, .btn {
 .navbar-brand {color:#fff;}
 
 
-.bottom {background:#0D68A8;color:#fff;font-size:15px;margin:0px;font-family:inherit;}
+.bottom {background:#0D68A8;color:#fff;font-size:15px;margin:0px;font-family:inherit;margin-top:10px;}
 .bottom .wrap{padding:52px 0 62px}
 .bottom .inner{padding-right:10%}
 .bottom .two-thirds{padding-top:30px}
