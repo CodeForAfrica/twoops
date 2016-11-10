@@ -45,7 +45,7 @@ def get_redis(db=5):
     """
     return <redis.StrictRedis> instance
     """
-    REDIS["db"] = db
+    REDIS["db"] = str(db)
     return redis.StrictRedis(**REDIS)
 
 
