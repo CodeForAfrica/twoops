@@ -60,7 +60,8 @@ def home():
             pages=chunks,
             pagecount=len(chunks),
             landing=True,
-            pagesize=app.config["PAGESIZE"]
+            pagesize=app.config["PAGESIZE"],
+            deleted_tweets=len(entries)
             )
 
 

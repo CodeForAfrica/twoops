@@ -6,7 +6,7 @@
     <div class="container">
         <div class="media-list">
             <div class="row">
-                <strong class="pull-right tweet-count">{{ (pagecount * pagesize)-1 }} deleted tweets</strong>
+                <strong class="pull-right tweet-count">{{ deleted_tweets }} deleted tweets</strong>
             </div>
             <div id="tweets">
                 {% for entry in pages[page] %}
@@ -69,6 +69,6 @@
         </div>
         <br clear="all">
 
-        <p>Last updated: {{ last_updated }} | Delete count at last run: {{ delete_count }}</p>
+        <!--<p>Last updated: {{ last_updated }} | Delete count at last run: {{ delete_count }}</p>-->
     </div>
 {% endblock %}
