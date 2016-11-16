@@ -10,6 +10,8 @@ from pylitwoops.streaming.listener import get_api
 from pylitwoops.streaming.listener import get_redis as _get_redis
 from pylitwoops.worker.check import chunkify
 from flask_paginate import Pagination
+import requests
+import json
 import math
 
 app = Flask(__name__,
@@ -60,7 +62,8 @@ def home():
             pages=chunks,
             pagecount=len(chunks),
             landing=True,
-            pagesize=app.config["PAGESIZE"]
+            pagesize=app.config["PAGESIZE"],
+            deleted_tweets=len(entries)
             )
 
 
@@ -161,6 +164,65 @@ def subscribe_to_alerts():
         key = app.config["PREFIX"]["alerts"] + str(user_id)
         redis_client.rpush(key, email)
     return jsonify({'success': True})
+
+@app.route('/unsubscribe', methods=["GET", "POST"])
+def unsubscribe():
+    '''
+    Recieves a email to send alerts to
+    '''
+    email = request.args.get('email', None)
+    user_id = request.args.get('user_id', None)
+
+    #TODO: Unsubscribe user from receiving deleted tweets of a particular user
+    return jsonify({'success': True})
+
+
+def send_mail(to, subject, message):
+    endpoint = 'https://api.sendgrid.com/v3/mail/send'
+    payload = {
+        "personalizations":[
+            {"to":
+                [
+                    {
+                        "email": to
+                    }
+                ]
+            }],
+        "from": {
+            "email": "support@codeforafrica.org"
+        },
+        "subject": subject,
+        "content": [
+            {
+                "type": "text/html", "value": get_template(to, message)
+            }]
+        }
+    headers = {
+        'Authorization': 'Bearer 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',
+        'Content-Type': 'application/json'
+    }
+    response = requests.post(endpoint, headers=headers, data=json.dumps(payload))
+    return response
+
+def get_template(to, message):
+    markup = '<html><head><link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" type="text/css"></head>'
+    markup += '<body style=\'font-family:"poppins"; font-size:18px; color:#333;"\'>'
+    markup += '<div style="background-color:#f0f0f0;width:100%;height:450px">'
+    markup += '<div style="background-color:#0D68A8; color:#fff;height:80px;padding:20px 0px;">'
+    markup += '<div style="margin:0 auto;font-size:30px;border:3px solid #fff;padding:5px;width:128px;">Tw<i>oops</i>!</center></div>'
+    markup += '<br clear="all"><br clear="all">'
+    markup += '<div style="margin:0 auto; width:600px; height:auto;padding:20px;background-color:#fff;color:#333;">'
+    markup += '<div style=""><h4><a href="">@'+ message['username'] +'</a> deleted this tweet just now:</h4> '
+    markup += '<h1>'+ message['message'] +'</h1></div><br>'
+    markup += '<a href="https://twoops.codeforafrica.tech/tweet?id='+ message['request_id'] +'">View this tweet</a>'
+    markup += '<br><br><br>'
+    markup += '<small>This was sent to you because you subscribed to <a href="https://twoops.codeforafrica.tech/">Twoops!</a><br>'
+    markup += '<a href="https://twoops.codeforafrica.tech/unsubscribe?email='+ to +'&user_id='+ message['user_id'] +'">Unsubscribe</a></small>'
+    markup += '</div></div></body></html>'
+    return markup
+
+# Sample request
+# send_mail('muthoni90@gmail.com', 'Test email', {'username': 'muthonieve', 'message': 'I can\'t believe I tweeted this', 'request_id': '23123', 'user_id':'121233'})
 
 
 manager = Manager(app)
