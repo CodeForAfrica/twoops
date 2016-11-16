@@ -89,8 +89,7 @@ def main():
                     subscribers_key = config.PREFIX["alerts"] + str(sender_id)
                     subscribers = redis_client.lrange(subscribers_key, 0, -1)
                     for subscriber in subscribers:
-                        send_email_alert(subscriber, "{username} deleted a tweet: {message}".format(
-                            **saved_status))
+                        send_email_alert(subscriber, saved_status)
                     print "%s has %s subscribers" % (saved_status["sender_id"], len(subscribers))
 
                     # index for search
