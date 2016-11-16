@@ -205,30 +205,20 @@ def send_mail(to, subject, message):
     return response
 
 def get_template(to, message):
-    markup = '<html>'
-    markup += '<head><link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" type="text/css"></head>'
+    markup = '<html><head><link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" type="text/css"></head>'
     markup += '<body style=\'font-family:"poppins"; font-size:18px; color:#333;"\'>'
     markup += '<div style="background-color:#f0f0f0;width:100%;height:450px">'
     markup += '<div style="background-color:#0D68A8; color:#fff;height:80px;padding:20px 0px;">'
-    markup += '<div style="margin:0 auto;font-size:30px;border:3px solid #fff;padding:5px;width:128px;">Tw<i>oops</i>!</center>'
-    markup += '</div>'
-    markup += '<br clear="all">'
-    markup += '<br clear="all">'
+    markup += '<div style="margin:0 auto;font-size:30px;border:3px solid #fff;padding:5px;width:128px;">Tw<i>oops</i>!</center></div>'
+    markup += '<br clear="all"><br clear="all">'
     markup += '<div style="margin:0 auto; width:600px; height:auto;padding:20px;background-color:#fff;color:#333;">'
-    markup += '<div style=""><a href="">@'+ message['username'] +'</a> deleted this tweet just now: '
-    markup += '<h3>'+ message['message'] +'</h3></div>'
-    markup += '<br>'
+    markup += '<div style=""><h4><a href="">@'+ message['username'] +'</a> deleted this tweet just now:</h4> '
+    markup += '<h1>'+ message['message'] +'</h1></div><br>'
     markup += '<a href="https://twoops.codeforafrica.tech/tweet?id='+ message['request_id'] +'">View this tweet</a>'
-    markup += '<br>'
-    markup += '<br>'
-    markup += '<br>'
-    markup += '<small>This was sent to you because you subscribed to <a href="https://twoops.codeforafrica.tech/">Twoops!</a>'
-    markup += '<br>'
+    markup += '<br><br><br>'
+    markup += '<small>This was sent to you because you subscribed to <a href="https://twoops.codeforafrica.tech/">Twoops!</a><br>'
     markup += '<a href="https://twoops.codeforafrica.tech/unsubscribe?email='+ to +'&user_id='+ message['user_id'] +'">Unsubscribe</a></small>'
-    markup += '</div>'
-    markup += '</div>'
-    markup += '</body>'
-    markup += '</html>'
+    markup += '</div></div></body></html>'
     return markup
 
 # Sample request
