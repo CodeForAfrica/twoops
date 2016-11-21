@@ -9,6 +9,7 @@ from pylitwoops.monitor import health_check
 from pylitwoops.streaming.listener import (
         get_redis, tweepy, PREFIX, TIME_KEY)
 from pylitwoops.data.tweet_template import template
+#from pylitwoops.web import app
 
 
 def chunkify(list_, size):
@@ -57,7 +58,7 @@ def main():
     print "[%s] - Going through %s entries... Broken down in %s chunks" % (
             datetime.datetime.now(), len(entries), len(chunks))
 
-    for chunk in chunks:
+    for chunk in chunks.__reversed__():
         # run chunk; then check rate limit
         delete_count = 0
         for entry in chunk:
@@ -89,7 +90,8 @@ def main():
                     subscribers_key = config.PREFIX["alerts"] + str(sender_id)
                     subscribers = redis_client.lrange(subscribers_key, 0, -1)
                     for subscriber in subscribers:
-                        send_email_alert(subscriber, saved_status)
+                        subject = "Twoops Alert: @{username} deleted a tweet".format(**saved_status)
+                        #app.send_mail(subscriber, subject, saved_status)
                     print "%s has %s subscribers" % (saved_status["sender_id"], len(subscribers))
 
                     # index for search
@@ -111,10 +113,6 @@ def main():
     health_check(config.HEALTH_CHECK_IDS["DELETECHECK"])
 
 
-def send_email_alert(recipient, message):
-    """
-    """
-    return True
 
 if __name__ == '__main__':
     main()
