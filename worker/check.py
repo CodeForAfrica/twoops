@@ -9,7 +9,6 @@ from pylitwoops.monitor import health_check
 from pylitwoops.streaming.listener import (
         get_redis, tweepy, PREFIX, TIME_KEY)
 from pylitwoops.data.tweet_template import template
-#from pylitwoops.web import app
 
 
 def chunkify(list_, size):
@@ -91,7 +90,7 @@ def main():
                     subscribers = redis_client.lrange(subscribers_key, 0, -1)
                     for subscriber in subscribers:
                         subject = "Twoops Alert: @{username} deleted a tweet".format(**saved_status)
-                        #app.send_mail(subscriber, subject, saved_status)
+                        send_email_alert(subscriber, subject, saved_status)
                     print "%s has %s subscribers" % (saved_status["sender_id"], len(subscribers))
 
                     # index for search
@@ -113,6 +112,48 @@ def main():
     health_check(config.HEALTH_CHECK_IDS["DELETECHECK"])
 
 
+def send_email_alert(to, subject, message):
+    endpoint = 'https://api.sendgrid.com/v3/mail/send'
+    payload = {
+        "personalizations":[{
+            "to":[{
+                    "email": to
+                }]
+            }],
+        "from": {
+            "email": "support@codeforafrica.org"
+        },
+        "subject": subject,
+        "content": [{
+                "type": "text/html", "value": get_template(to, message)
+            }]
+        }
+    headers = {
+        'Authorization': 'Bearer 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',
+        'Content-Type': 'application/json'
+    }
+    response = requests.post(endpoint, headers=headers, data=json.dumps(payload))
+    return response
+
+def get_template(to, message):
+    markup = '<html><head><link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" type="text/css"></head>'
+    markup += '<body style=\'font-family:"poppins"; font-size:18px; color:#333;"\'>'
+    markup += '<div style="background-color:#f0f0f0;width:100%;height:450px">'
+    markup += '<div style="background-color:#0D68A8; color:#fff;height:80px;padding:20px 0px;">'
+    markup += '<div style="margin:0 auto;font-size:30px;border:3px solid #fff;padding:5px;width:128px;">Tw<i>oops</i>!</center></div>'
+    markup += '<br clear="all"><br clear="all">'
+    markup += '<div style="margin:0 auto; width:600px; height:auto;padding:20px;background-color:#fff;color:#333;">'
+    markup += '<div style=""><h4><a href="">@'+ message['username'] +'</a> deleted this tweet just now:</h4> '
+    markup += '<h1>'+ message['message'] +'</h1></div><br>'
+    markup += '<a href="https://twoops.codeforafrica.tech/tweet?id='+ message['request_id'] +'">View this tweet</a>'
+    markup += '<br><br><br>'
+    markup += '<small>This was sent to you because you subscribed to <a href="https://twoops.codeforafrica.tech/">Twoops!</a><br>'
+    markup += '<a href="https://twoops.codeforafrica.tech/unsubscribe?email='+ to +'&user_id='+ message['user_id'] +'">Unsubscribe</a></small>'
+    markup += '</div></div></body></html>'
+    return markup
+
+# Sample request
+# send_mail('muthoni90@gmail.com', 'Test email', {'username': 'muthonieve', 'message': 'I can\'t believe I tweeted this', 'request_id': '23123', 'user_id':'121233'})
 
 if __name__ == '__main__':
     main()
