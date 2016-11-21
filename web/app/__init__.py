@@ -44,7 +44,7 @@ def home():
         last_updated = delete_count = "0"
     entries = redis_client.keys("%s*" % app.config['PREFIX']['deleted'])
     deleted_tweets = []
-    for entry in entries:
+    for entry in entries.__reversed__():
         deleted_tweet = eval(redis_client.get(entry))
         if str(deleted_tweet.get('sender_id')) == app.config['HEARTBEAT_ACCOUNT']:
             continue
