@@ -113,27 +113,30 @@ def main():
 
 
 def send_email_alert(to, subject, message):
-    endpoint = 'https://api.sendgrid.com/v3/mail/send'
-    payload = {
-        "personalizations":[{
-            "to":[{
-                    "email": to
+    try:
+        endpoint = 'https://api.sendgrid.com/v3/mail/send'
+        payload = {
+            "personalizations":[{
+                "to":[{
+                        "email": to
+                    }]
+                }],
+            "from": {
+                "email": "support@codeforafrica.org"
+            },
+            "subject": subject,
+            "content": [{
+                    "type": "text/html", "value": get_template(to, message)
                 }]
-            }],
-        "from": {
-            "email": "support@codeforafrica.org"
-        },
-        "subject": subject,
-        "content": [{
-                "type": "text/html", "value": get_template(to, message)
-            }]
+            }
+        headers = {
+            'Authorization': 'Bearer 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',
+            'Content-Type': 'application/json'
         }
-    headers = {
-        'Authorization': 'Bearer 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',
-        'Content-Type': 'application/json'
-    }
-    response = requests.post(endpoint, headers=headers, data=json.dumps(payload))
-    return response
+        response = requests.post(endpoint, headers=headers, data=json.dumps(payload))
+        return response
+    except Exception, err:
+        print "ERROR: Could not send email alert - %s -- %s" % (message, err)
 
 def get_template(to, message):
     markup = '<html><head><link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" type="text/css"></head>'
