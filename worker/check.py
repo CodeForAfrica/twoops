@@ -145,10 +145,10 @@ def get_template(to, message):
     markup += '<div style="margin:0 auto; width:600px; height:auto;padding:20px;background-color:#fff;color:#333;">'
     markup += '<div style=""><h4><a href="">@'+ message['username'] +'</a> deleted this tweet just now:</h4> '
     markup += '<h1>'+ message['message'] +'</h1></div><br>'
-    markup += '<a href="https://twoops.codeforafrica.tech/tweet?id='+ message['request_id'] +'">View this tweet</a>'
+    markup += '<a href="https://twoops.codeforafrica.tech/tweet?id='+ str(message['request_id']) +'">View this tweet</a>'
     markup += '<br><br><br>'
     markup += '<small>This was sent to you because you subscribed to <a href="https://twoops.codeforafrica.tech/">Twoops!</a><br>'
-    markup += '<a href="https://twoops.codeforafrica.tech/unsubscribe?email='+ to +'&user_id='+ message['user_id'] +'">Unsubscribe</a></small>'
+    markup += '<a href="https://twoops.codeforafrica.tech/unsubscribe?email='+ to +'&user_id='+ str(message['user_id']) +'">Unsubscribe</a></small>'
     markup += '</div></div></body></html>'
     return markup
 
