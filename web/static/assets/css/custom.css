@@ -1,5 +1,5 @@
 body {
-    background: #fff;
+    background: #f4f4f4;
     font-family: 'Poppins', sans-serif;
     margin-right: 0;
     font-size:15px;
@@ -129,16 +129,10 @@ button:hover, .btn:hover {
     float: right;
     color: #fff;
     background: #cd0033;
-    height: 30px;
-    width: 30px;
-    margin-right:6px;
-    /**bborder-radius: 30px;
-    ackground-color: #CF000F;**/
-    line-height: 30px;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
     text-align: center;
-    /**-webkit-box-shadow: 4px 6px 112px -26px rgba(0,0,0,1);
-    -moz-box-shadow: 4px 6px 112px -26px rgba(0,0,0,1);
-    box-shadow: 4px 6px 112px -26px rgba(0,0,0,1);**/
 }
 
 .user-search .input-group {
@@ -292,11 +286,17 @@ html, body {
     border-bottom:2px solid #0D68A8;
 }
 .story-card img {
-    height:250px;
+    max-height:250px;
+    width:100%;
 }
 .story-card {
-    padding:15px;
+    padding:10px;
+}
+.story-card .wrapper {
+    padding:10px;
     text-align:center;
+    background-color:#fff;
+    cursor:pointer;
 }
 .success, .error {
     display:none;
