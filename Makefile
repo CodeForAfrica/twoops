@@ -8,7 +8,7 @@ runscript:
 	python worker/check.py
 
 startstreaming:
-	python streaming/start.py
+	python streaming/start.py &
 
 user-refresh:
 	python scripts/lists.py refresh 763301230999404544

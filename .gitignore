@@ -94,3 +94,4 @@ logs/*
 export.csv
 import.py
 export.py
+*.swp
