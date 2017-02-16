@@ -1,5 +1,5 @@
-from pylitwoops.streaming.listener import get_redis, PREFIX
-from pylitwoops.streaming import config
+from twoops.streaming.listener import get_redis, PREFIX
+from twoops.streaming import config
 import csv, datetime
 
 

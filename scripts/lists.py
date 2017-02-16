@@ -16,10 +16,10 @@ Usage:
 
 """
 import sys, time, csv
-from pylitwoops.streaming import listener, config
-from pylitwoops.worker.check import chunkify
-from pylitwoops.monitor import health_check
-from pylitwoops.streaming import config
+from twoops.streaming import listener, config
+from twoops.worker.check import chunkify
+from twoops.monitor import health_check
+from twoops.streaming import config
 
 
 def new_list(list_name, mode='private'):
@@ -42,7 +42,7 @@ def add_list_member(list_id, members=[]):
     t = listener.get_api()
     for member in members:
         assert isinstance(member, int)
-    added = t.add_list_members(user_id=members, list_id=int(list_id))
+    added = t.add_list_members(user_id=members, list_id=int(list_id)) # Twitter API, Adds a user to a twitter list
     print "Added %s members to %s" % (len(members), added.id)
     return added
 

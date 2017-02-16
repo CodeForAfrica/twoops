@@ -5,9 +5,9 @@ import time
 import redis
 import tweepy
 import logging
-from pylitwoops.monitor import health_check
-from pylitwoops.streaming import config
-from pylitwoops.streaming.config import (
+from twoops.monitor import health_check
+from twoops.streaming import config
+from twoops.streaming.config import (
         TW_AUTH_CREDENTIALS, SENDER_ID, REDIS, PREFIX, TIME_KEY,
         HEARTBEAT_ACCOUNT, PRINCIPLE_TW_HANDLE)
 

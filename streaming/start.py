@@ -1,5 +1,5 @@
-from pylitwoops.streaming import listener
-from pylitwoops.streaming.config import LOGGING
+from twoops.streaming import listener
+from twoops.streaming.config import LOGGING
 import tweepy, logging
 
 print "Creating logger..."

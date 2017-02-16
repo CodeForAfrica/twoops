@@ -1,8 +1,8 @@
 """
 """
 import uuid
-from pylitwoops.monitor import health_check
-from pylitwoops.streaming import listener, config
+from twoops.monitor import health_check
+from twoops.streaming import listener, config
 
 def heart_beat():
     tw = listener.get_api()
@@ -14,3 +14,5 @@ def heart_beat():
 
 if __name__ == '__main__':
     heart_beat()
+
+# To keep our Twitter connection open. We tweet a random message to keep the connection open.

@@ -1,4 +1,4 @@
-from pylitwoops.streaming.listener import get_redis, PREFIX
+from twoops.streaming.listener import get_redis, PREFIX
 
 def load():
     '''

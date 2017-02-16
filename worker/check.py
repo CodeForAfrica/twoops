@@ -2,13 +2,13 @@
 check if tweet has been deleted
 """
 import boto3
-import requests
+import requests, json
 import datetime, time, math
-from pylitwoops.streaming import config
-from pylitwoops.monitor import health_check
-from pylitwoops.streaming.listener import (
+from twoops.streaming import config
+from twoops.monitor import health_check
+from twoops.streaming.listener import (
         get_redis, tweepy, PREFIX, TIME_KEY)
-from pylitwoops.data.tweet_template import template
+from twoops.data.tweet_template import template
 
 
 def chunkify(list_, size):
@@ -94,7 +94,7 @@ def main():
                     print "%s has %s subscribers" % (saved_status["sender_id"], len(subscribers))
 
                     # index for search
-                    index_for_search(saved_status)
+                    index_for_search(saved_status) # We save only the deleted tweet.
                     delete_count += 1
                 else:
                     print "Unexpected response for %s -- %s: %s" % (

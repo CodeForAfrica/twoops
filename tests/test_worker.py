@@ -1,10 +1,10 @@
 """
-pylitwoops.worker.check tests
+twoops.worker.check tests
 """
 
 import random
 import unittest
-from pylitwoops.streaming.listener import get_api
+from twoops.streaming.listener import get_api
 
 class WorkerTestCase(unittest.TestCase):
     

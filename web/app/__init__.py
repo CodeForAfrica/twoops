@@ -5,10 +5,10 @@ import os, redis, datetime
 from flask import (Flask, g, request, session, redirect,
                    url_for, render_template, jsonify)
 from flask_script import Manager
-from pylitwoops.streaming import config as config_file
-from pylitwoops.streaming.listener import get_api
-from pylitwoops.streaming.listener import get_redis as _get_redis
-from pylitwoops.worker.check import chunkify
+from twoops.streaming import config as config_file
+from twoops.streaming.listener import get_api
+from twoops.streaming.listener import get_redis as _get_redis
+from twoops.worker.check import chunkify
 from flask_paginate import Pagination
 import requests
 import json

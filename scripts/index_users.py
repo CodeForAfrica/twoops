@@ -3,8 +3,8 @@ loop through all deleted tweets and index them on another redis
 database by sender_id
 """
 import datetime
-from pylitwoops.streaming import config
-from pylitwoops.streaming import listener
+from twoops.streaming import config
+from twoops.streaming import listener
 
 
 if __name__ == "__main__":
@@ -13,5 +13,5 @@ if __name__ == "__main__":
     for entry in redis_tweets.keys("del-*"):
         sender_id = eval(redis_tweets.get(entry))["sender_id"]
         sender_key = "user-" + str(sender_id)
-        added = redis_users.rpush(sender_key, entry)
+        added = redis_users.rpush(sender_key, entry) # Redis function that inserts a value at the tail of a list
         print "%s - %s - %s" % (sender_key, entry, added)

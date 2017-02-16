@@ -10,7 +10,7 @@
             </div>
             <div id="tweets">
                 {% for entry in pages[page] %}
-                <div class="tweet-card" style="height:auto;margin-top:15px;padding:0px 20px;">
+                <div class="tweet-card" style="height:auto;margin-top:15px;padding:0px 20px;" data-toggle="modal" data-target="#myModal">
                     <div class="row wrapper" style="">
                         <div class="col-md-1" style="height:100%;padding-top: 50px;">
                             <a class="media-left" href="/user/{{ entry['sender_id'] }}">
@@ -21,6 +21,7 @@
                             <span class="media-heading"><a href="https://twitter.com/{{ entry['username'] }}" target="_blank">@{{ entry['username'] }}</a></span> deleted this tweet:
                             <div class="blockquote">
                                 <a href="/tweet/{{ entry['request_id'] }}"><p class="m-b-0">{{ entry['message'].decode('utf-8') }}</p> </a>
+                                <!--<a href="#"><p class="m-b-0">{{ entry['message'].decode('utf-8') }}</p> </a>-->
                             </div>
                             <hr>
                             <span class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ entry['created_at'] }}</span>
@@ -29,10 +30,15 @@
                             <span class="text-muted">via {{ entry.get('source') }}</span>
                             {% endif %}
                             <span class="links">
-                                <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=twoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }}">Reply to @{{ entry['username'] }}</a>
+                                <a class="embed" href="">Embed this</a>
+                                <!--<a target="_blank" href="https://twitter.com/intent/tweet?hashtags=twoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }}">Reply to @{{ entry['username'] }}</a>-->
                                 &nbsp;.&nbsp;
                                 <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=twoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ entry['username'] }} deleted this tweet: {{ entry['message'].decode('utf-8') }}" >Share on Twitter</a>
                             </span>
+                            <hr>
+                            <div class="col-md-12">
+                                <textarea class="form-control"><iframe src="/tweet/{{ entry['request_id'] }}" frameborder="0" scrolling="no" height="400px" width="100%"></iframe></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -72,4 +78,48 @@
 
         <!--<p>Last updated: {{ last_updated }} | Delete count at last run: {{ delete_count }}</p>-->
     </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+      Launch demo modal
+    </button>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="myModal" >
+      <div class="modal-dialog" role="document" style="width:70%;">
+        <div class="modal-content">
+          <div class="modal-body">
+            <span class="pull-right" data-dismiss="modal">Close</span>
+            <div class="tweet-card" style="height:auto;margin-top:15px;padding:0px 20px;margin-bottom:15px;">
+                <div class="row">
+                    <div class="col-md-12" style="padding: 20px;">
+                        <div class="tweet-row" style="height:auto;">
+                            <a class="media-left" href="/user/{{ pages[page][0]['sender_id'] }}">
+                            <img class="img-circle" src="{{ pages[page][0].get('avatar') }}" alt="{{ pages[page][0]['username'] }}" height="100px;">
+                        </a>
+                        </div>
+                        <div class="blockquote">
+                            <a href="/tweet/{{ pages[page][0]['request_id'] }}"><p class="m-b-0">{{ pages[page][0]['message'].decode('utf-8') }}</p> </a>
+                        </div>
+
+                        <div class="tweet-row underline"><a href="https://twitter.com/{{ pages[page][0]['username'] }}" target="_blank">@{{ pages[page][0]['username'] }}</a></div>
+
+                         <div class="tweet-row"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ pages[page][0]['created_at'] }}</div>
+
+                        {% if pages[page][0].get('source') %}
+                        <div class="tweet-row">via {{ pages[page][0].get('source') }}</div>
+                        {% endif %}
+
+                        <span class="links">
+                            <a class="embed" href="">Embed this</a>
+                            <!--<a target="_blank" href="https://twitter.com/intent/tweet?hashtags=twoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ pages[page][0]['username'] }}">Reply to @{{ pages[page][0]['username'] }}</a>-->
+                            &nbsp;.&nbsp;
+                            <a target="_blank" href="https://twitter.com/intent/tweet?hashtags=twoops&original_referer=https%3A%2F%2Fcodeforafrica.tech&ref_src=twsrc%5Etfw&tw_p=tweetbutton&text=.@{{ pages[page][0]['username'] }} deleted this tweet: {{ pages[page][0]['message'].decode('utf-8') }}" >Share on Twitter</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 {% endblock %}
