@@ -76,22 +76,25 @@ def tracked_users():
     redis_client_user = get_redis(users_only=True)
     users = []
     page = request.args.get('page', type=int, default=0)
-    per_page = 9
+    per_page = 900
     keys = redis_client.keys("%s*" % app.config['PREFIX']['user'])
-    for user in keys[page * per_page: page * per_page + per_page]:
-        user_payload = eval(redis_client.get(user))
-        
-        lenkey = "user-" + str(user_payload["id"])
-        user_delete_count = redis_client_user.llen(lenkey)
+    for user in keys: #[page * per_page: page * per_page + per_page]:
+        try:
+            user_payload = eval(redis_client.get(user))
+            print user_payload
+            lenkey = "user-" + str(user_payload["id"])
+            user_delete_count = redis_client_user.llen(lenkey)
 
-        if not str(user_payload['id']) == app.config['HEARTBEAT_ACCOUNT']:
-            users.append(dict(
-                screen_name=user_payload['screen_name'],
-                avatar=user_payload['profile_image_url'],
-                user_id=user_payload['id'],
-                bio=user_payload['description'],
-                delete_count=user_delete_count
-                ))
+            if not str(user_payload['id']) == app.config['HEARTBEAT_ACCOUNT']:
+                users.append(dict(
+                    screen_name=user_payload['screen_name'],
+                    avatar=user_payload['profile_image_url'],
+                    user_id=user_payload['id'],
+                    bio=user_payload['description'],
+                    delete_count=user_delete_count
+                    ))
+        except Exception, e:
+            print e
     pagination = Pagination(page=page, total=len(users), search='', record_name='users')
     pagecount = int(math.ceil( float(len(keys))/per_page))
     return render_template('users.html', users=users, pagination=pagination, pagecount=pagecount, page=page, users_page=True)
@@ -124,6 +127,7 @@ def user(user_id):
     redis_client_user = get_redis(users_only=True)
     store_key = "user-" + str(user_id)
     user_profile = eval(redis_client.get(store_key))
+    print user_profile
     user_deleted_tweets = redis_client_user.lrange(store_key, 0, -1)
     user_tweets = []
     for tweet_id in user_deleted_tweets:

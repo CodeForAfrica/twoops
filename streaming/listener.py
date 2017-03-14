@@ -1,7 +1,7 @@
 """
 Stream listener
 """
-import time
+import time, datetime
 import redis
 import tweepy
 import logging
@@ -85,6 +85,7 @@ class Listener(tweepy.StreamListener):
                       created_at=status.created_at,
                       sender_id=status.user.id,
                       username=status.user.screen_name,
+                      name=status.user.name,
                       avatar=status.user.profile_image_url.replace('_normal', ''),
                       message=str(status.text.encode('utf-8')),
                       saved="",
