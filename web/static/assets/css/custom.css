@@ -301,3 +301,5 @@ html, body {
 .success, .error {
     display:none;
 }
+textarea {display:none;}
+.embed {display:none;}

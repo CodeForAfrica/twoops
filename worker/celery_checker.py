@@ -1,5 +1,6 @@
 import requests, os
 import datetime
+import boto3
 from twoops.streaming import config
 from twoops.streaming.listener import (get_redis, tweepy, PREFIX, TIME_KEY)
 from twoops.data.tweet_template import template
