@@ -130,7 +130,7 @@ def send_email_alert(to, subject, message):
                 }]
             }
         headers = {
-            'Authorization': 'Bearer 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',
+            'Authorization': 'Bearer <YOUR API KEY>',
             'Content-Type': 'application/json'
         }
         response = requests.post(endpoint, headers=headers, data=json.dumps(payload))
